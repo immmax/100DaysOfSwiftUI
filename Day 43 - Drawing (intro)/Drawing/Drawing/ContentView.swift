@@ -31,7 +31,7 @@ struct ContentView: View {
                     }
                 }
             }
-            .navigationTitle("Project 8 - Drawing")
+            .navigationTitle("Project 9 - Drawing")
 //            .foregroundColor(.primary)
             .preferredColorScheme(.dark)
             .background(
