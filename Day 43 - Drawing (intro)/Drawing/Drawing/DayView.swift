@@ -14,7 +14,8 @@ struct DayView: View {
         if number == 1 { Day_43_View()}
         else if number == 2 { Day_44_View() }
         else if number == 3 { Day_45_View() }
-        else {Day_46_View()}
+        else if number == 4 { Day_46_View() }
+        else {Text("I have no idea what are you looking for. Sorry.")}
             
     }
     

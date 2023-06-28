@@ -59,7 +59,6 @@
 		914891592A3D001A00052385 = {
 			isa = PBXGroup;
 			children = (
-				914891812A3D909900052385 /* AstronautView.swift */,
 				914891642A3D001A00052385 /* Moonshot */,
 				914891632A3D001A00052385 /* Products */,
 			);
@@ -81,6 +80,7 @@
 				91F6E84A2A4149E0003DB626 /* GridLayout.swift */,
 				91F6E84C2A414A4E003DB626 /* ListLayout.swift */,
 				9148917F2A3D61A800052385 /* MissionView.swift */,
+				914891812A3D909900052385 /* AstronautView.swift */,
 				914891872A40CFED00052385 /* CrewView.swift */,
 				914891772A3D016200052385 /* Astronaut.swift */,
 				9148917B2A3D060700052385 /* Mission.swift */,
@@ -315,6 +315,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Moonshot/Preview Content\"";
+				DEVELOPMENT_TEAM = J92SCDW5UB;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -343,6 +344,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Moonshot/Preview Content\"";
+				DEVELOPMENT_TEAM = J92SCDW5UB;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
