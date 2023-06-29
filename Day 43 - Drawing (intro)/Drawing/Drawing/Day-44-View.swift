@@ -52,7 +52,7 @@ struct ColorCyclingCircle: View {
     func color(for value: Int, brightness: Double) -> Color {
         var targetHue = Double(value) / Double(steps) + amount
         
-        if targetHue > 1{
+        if targetHue > 1 {
             targetHue -= 1
         }
         
