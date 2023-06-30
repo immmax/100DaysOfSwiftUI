@@ -13,19 +13,20 @@ struct AddHabitView: View {
     
     @State private var name = ""
     @State private var description = ""
+    @State private var completionCount = 0
     
     var body: some View {
-        
-        NavigationStack {
+        NavigationView {
             Form {
-                
                 TextField("Name", text: $name)
+                    .submitLabel(.next)
+                
                 TextField("Description", text: $description)
             }
             .navigationTitle("Add New Habit")
             .toolbar {
-                Button("Add") {
-                    let item = HabitItem(name: name, description: description, completionCount: 0)
+                Button("Save") {
+                    let item = HabitItem(name: name, description: description, completionCount: completionCount)
                     habits.items.append(item)
                     dismiss()
                 }

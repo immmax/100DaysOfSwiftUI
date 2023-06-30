@@ -9,62 +9,48 @@ import SwiftUI
 
 struct ContentView: View {
     @StateObject var habits = Habits()
-    
-    @State private var showingEditSheet = false
+    @State private var showingAddHabit = false
     
     
     
     var body: some View {
-        NavigationStack {
+        NavigationView {
             List {
                 ForEach(habits.items) { item in
-//                    HStack {
-//                        Text("will come later")
-//                    } label: {
-                        VStack {
-                            Text(item.name)
-//                                .font(.headline)
-//                                .multilineTextAlignment(.leading)
-                            Text(item.description)
-                                .opacity(0.7)
-//                                .multilineTextAlignment(.leading)
+                        HStack {
+                            VStack(alignment: .leading) {
+                                Text(item.name)
+                                    .font(.headline)
+                                Text(item.description)
+                                    .opacity(0.7)
+                            }
+                            Spacer()
+                            Text("Count: \(item.completionCount)")
                         }
                         .swipeActions(edge: .leading) {
-                            HStack {
-//                                        Button {
-//                                            habits.items.remove(atOffsets: )
-//                                        } label: {
-//                                            Label("Delete", systemImage: "trash")
-//                                        }
-//                                        .tint(.red)
-                                
-                                Button {
-                                    //wsfda
-                                } label: {
-                                    Label("Edit", systemImage: "pencil")
-                                }
-                                .tint(.blue)
+                            Button {
+                                // Edit habit item action
+                            } label: {
+                                Label("Edit", systemImage: "pencil")
                             }
+                            .tint(.blue)
                         }
-//                    }
-
+                    }
+                    .onDelete(perform: removeItems)
                 }
-                .onDelete(perform: removeItems)
-            }
             .navigationTitle("Habits")
             .toolbar {
                 Button {
-                    showingEditSheet.toggle()
+                    showingAddHabit = true
                 } label: {
                     Image(systemName: "plus")
                 }
             }
-            .sheet(isPresented: $showingEditSheet) {
-                AddHabitView(habits: Habits())
+            .sheet(isPresented: $showingAddHabit) {
+                AddHabitView(habits: habits)
                     .presentationDetents([.height(200), .height(200)])
             }
         }
-        .padding()
     }
     
     func removeItems(at offsets: IndexSet) {
