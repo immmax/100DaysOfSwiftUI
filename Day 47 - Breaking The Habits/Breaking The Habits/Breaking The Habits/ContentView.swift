@@ -11,39 +11,37 @@ struct ContentView: View {
     @StateObject var habits = Habits()
     @State private var showingAddHabit = false
     
-    
-    
     var body: some View {
         NavigationView {
             List {
                 ForEach(habits.items) { item in
+                    NavigationLink {
+                            HabitView(item: item)
+                    } label: {
                         HStack {
-                            VStack(alignment: .leading) {
-                                Text(item.name)
-                                    .font(.headline)
-                                Text(item.description)
-                                    .opacity(0.7)
-                            }
+                            Text(item.name)
+//                            Image(systemName: "house")
                             Spacer()
-                            Text("Count: \(item.completionCount)")
-                        }
-                        .swipeActions(edge: .leading) {
                             Button {
-                                // Edit habit item action
+                                print("Favorite Button pressed.")
+//                                item.isFavorite.toggle()
                             } label: {
-                                Label("Edit", systemImage: "pencil")
+                                Image(systemName: item.isFavorite ? "heart.fill" : "heart")
                             }
-                            .tint(.blue)
+                            .buttonStyle(.bordered)
+//                            Spacer()
                         }
                     }
-                    .onDelete(perform: removeItems)
                 }
+                .onDelete(perform: removeItems)
+            }
             .navigationTitle("Habits")
             .toolbar {
                 Button {
                     showingAddHabit = true
                 } label: {
-                    Image(systemName: "plus")
+                    Image(systemName: "plus.circle.fill")
+                        .foregroundColor(.green)
                 }
             }
             .sheet(isPresented: $showingAddHabit) {
