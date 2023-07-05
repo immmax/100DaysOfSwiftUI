@@ -19,6 +19,7 @@ class Habits: ObservableObject {
     }
     
     init() {
+        // Custom initializer
         if let savedItems = UserDefaults.standard.data(forKey: "Items") {
             if let decodedItems = try? JSONDecoder().decode([HabitItem].self, from: savedItems) {
                 items = decodedItems

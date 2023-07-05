@@ -9,15 +9,19 @@ import SwiftUI
 
 struct ActivitiesView: View {
     @StateObject var activities = Activities()
-    
+    var habitID: UUID
     var body: some View {
-        Form {
+        List {
             ForEach(activities.items) { item in
-
-                VStack {
-                    Text(item.date, format: .dateTime.year().month().day().hour().minute())
-                    Text("\(item.comment)")
+                LazyVStack(alignment: .leading) {
+                    if item.id == habitID {
+                        Text(item.date, format: .dateTime.year().month().day().hour().minute())
+                            .font(.headline)
+                            .opacity(0.5)
+                        Text(item.comment)
+                    }
                 }
+                .padding(.horizontal)
             }
             .onDelete(perform: removeActivityItem)
         }
@@ -29,9 +33,10 @@ struct ActivitiesView: View {
 }
 
 struct ActivitiesView_Previews: PreviewProvider {
-    static var activities = Activities()
+    //static var activities = Activities()
+    static var habitID = UUID()
     
     static var previews: some View {
-        ActivitiesView(activities: activities)
+        ActivitiesView(habitID: habitID)
     }
 }

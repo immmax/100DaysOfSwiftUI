@@ -8,28 +8,25 @@
 import SwiftUI
 
 struct HabitView: View {
-    @StateObject var activities = Activities()
+//    @StateObject var activities = Activities()
     @State private var isFavorite = false
+    @State private var showingAddActivity = false
     
     var item: HabitItem
-    
+
     var body: some View {
         NavigationStack {
-            ViewThatFits {
-                Section("Description") {
-                    Text(item.description)
-                        .opacity(0.7)
-                }
-//                Toggle("Add to favorite", isOn: $isFavorite)
-                Section {
-                    ActivitiesView(activities: activities)
-                }
+            VStack {
+                Text(item.description)
+                    .opacity(0.7)
+                ActivitiesView(habitID: item.id)
             }
             .navigationTitle(item.name)
+            .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .bottomBar) {
                     Button {
-                        
+                        showingAddActivity = true
                     } label: {
                         Image(systemName: "plus")
                     }
@@ -37,17 +34,18 @@ struct HabitView: View {
                     .buttonStyle(.bordered)
                 }
             }
+            .sheet(isPresented: $showingAddActivity) {
+                AddActivityView(habitID: item.id)
+                    .presentationDetents([.height(200), .height(200)])
+            }
         }
     }
     
-    func addActivity(comment: String) {
+    func addActivity(item: HabitItem, comment: String) {
         // adding one activity
-        activities.items.append(ActivityItem(date: Date.now, comment: comment))
-//        var newItem = ActivityItem()
-//        newItem.date = Date.now()
-//        newItem.description = "I made it!"
-//        
-//        activities.items.append(newItem)
+        item.activities.append(ActivityItem( habitID: item.id,
+                                             date: Date.now,
+                                             comment: comment))
     }
 }
 
@@ -56,9 +54,10 @@ struct HabitView_Previews: PreviewProvider {
     
     static var demoItem = HabitItem(name: "Demo Habit Name",
                                     description: "Demo Habit Description",
-                                    status: "house",
-                                    isFavorite: isFavorite,
-                                    completionCount: 25)
+                                    activities: Activities())
+//                                    status: "house",
+//                                    isFavorite: isFavorite,
+//                                    completionCount: 25)
     
     static var previews: some View {
         HabitView(item: demoItem)

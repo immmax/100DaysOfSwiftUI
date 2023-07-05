@@ -10,26 +10,20 @@ import SwiftUI
 struct ContentView: View {
     @StateObject var habits = Habits()
     @State private var showingAddHabit = false
+    @State private var searchHabit = ""
+    
+//    var filteredHabits: [HabitItem]
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             List {
                 ForEach(habits.items) { item in
                     NavigationLink {
-                            HabitView(item: item)
+                        HabitView(item: item)
                     } label: {
-                        HStack {
+                        VStack(alignment: .leading) {
                             Text(item.name)
-//                            Image(systemName: "house")
-                            Spacer()
-                            Button {
-                                print("Favorite Button pressed.")
-//                                item.isFavorite.toggle()
-                            } label: {
-                                Image(systemName: item.isFavorite ? "heart.fill" : "heart")
-                            }
-                            .buttonStyle(.bordered)
-//                            Spacer()
+                            Text(item.description)
                         }
                     }
                 }
@@ -57,6 +51,7 @@ struct ContentView: View {
 }
 
 struct ContentView_Previews: PreviewProvider {
+    
     static var previews: some View {
         ContentView()
     }

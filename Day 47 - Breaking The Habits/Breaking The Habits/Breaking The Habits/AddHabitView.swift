@@ -11,33 +11,45 @@ struct AddHabitView: View {
     @ObservedObject var habits: Habits
     @Environment(\.dismiss) var dismiss
     
+    enum FocusedField {
+        case name, description
+    }
+    
+    @FocusState private var focusedField: FocusedField?
     @State private var name = ""
     @State private var description = ""
-    @State private var completionCount = 0
-    @State private var isFavorite = false
+//    @State private var completionCount = 0
+//    @State private var isFavorite = false
     
     var body: some View {
-        NavigationView {
-            Form {
-                TextField("Name", text: $name)
-                    .submitLabel(.next)
-                
-                TextField("Description", text: $description)
-//                
-            }
-            .navigationTitle("Add New Habit")
-            .toolbar {
-                Button("Save") {
-                    let item = HabitItem(name: name,
-                                         description: description,
-                                         status: "house",
-                                         isFavorite: isFavorite,
-                                         completionCount: completionCount)
-                    habits.items.append(item)
+        Form {
+            Text("Add New Habit")
+                .font(.largeTitle.bold())
+            
+            TextField("Name", text: $name)
+                .focused($focusedField, equals: .name)
+                .submitLabel(.next)
+                .onSubmit {
+                    focusedField = .description
+                }
+            
+            TextField("Description", text: $description)
+                .focused($focusedField, equals: .description)
+                .submitLabel(.done)
+                .buttonStyle(.borderedProminent)
+                .onSubmit {
+                    addHabit()
+                    focusedField = nil
                     dismiss()
                 }
-            }
         }
+    }
+    
+    func addHabit() {
+        let item = HabitItem(name: name,
+                             description: description,
+                             activities: Activities())
+        habits.items.append(item)
     }
 }
 

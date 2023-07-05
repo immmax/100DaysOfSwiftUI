@@ -19,6 +19,7 @@ class Activities: ObservableObject {
     }
     
     init() {
+        // Custom initializer
         if let savedItems = UserDefaults.standard.data(forKey: "Items") {
             if let decodedItems = try? JSONDecoder().decode([ActivityItem].self, from: savedItems) {
                 items = decodedItems

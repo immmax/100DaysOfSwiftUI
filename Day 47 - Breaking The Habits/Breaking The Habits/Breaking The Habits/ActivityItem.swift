@@ -7,8 +7,9 @@
 
 import Foundation
 
-struct ActivityItem: Identifiable, Codable, Equatable {
+struct ActivityItem: Identifiable, Codable {
     var id = UUID()
+    let habitID: UUID
     let date: Date
     let comment: String
 }
