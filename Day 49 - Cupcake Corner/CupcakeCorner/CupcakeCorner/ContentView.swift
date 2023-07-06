@@ -39,16 +39,31 @@ struct ContentView: View {
     @State private var results = [Result]()
     
     var body: some View {
-        List(results, id: \.trackId) { item in
-            VStack(alignment: .leading) {
-                Text(item.trackName)
-                    .font(.headline.weight(.black))
-                Text(item.collectionName)
+        VStack {
+            AsyncImage(url: URL(string: "https://hws.dev/img/logo.png")) { phase in
+                if let image = phase.image {
+                    image
+                        .resizable()
+                        .scaledToFit()
+                } else if phase.error != nil {
+                    Text("There was an error liading an image.")
+                } else {
+                    ProgressView()
+                }
             }
-        }
-        .padding()
-        .task {
-            await loadData()
+            .frame(width: 200, height: 200)
+            
+            List(results, id: \.trackId) { item in
+                VStack(alignment: .leading) {
+                    Text(item.trackName)
+                        .font(.headline.weight(.black))
+                    Text(item.collectionName)
+                }
+            }
+            .padding()
+            .task {
+                await loadData()
+            }
         }
     }
     
