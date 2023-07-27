@@ -14,10 +14,14 @@ struct AddBookView: View {
     @State private var title = ""
     @State private var author = ""
     @State private var rating = 3
-    @State private var genre = ""
+    @State private var genre = "General"
     @State private var review = ""
     
-    let genres = ["Fantasy", "Horror", "Kids", "Mystery", "Poetry", "Romance", "Thriller"]
+    let genres = ["General", "Fantasy", "Horror", "Kids", "Mystery", "Poetry", "Romance", "Thriller"]
+    
+    var isBookValid: Bool {
+        return (title.isEmpty || title == " ") && (author.isEmpty || author == " ")
+    }
     
     var body: some View {
         NavigationView {
@@ -43,8 +47,8 @@ struct AddBookView: View {
                     Button("Save") {
                         let newBook = Book(context: moc)
                         newBook.id = UUID()
-                        newBook.title = title
-                        newBook.author = author
+                        newBook.title = title == " " ? "Unknown Title" : title
+                        newBook.author = author == " " ? "Unknown Author" : author
                         newBook.rating = Int16(rating)
                         newBook.genre = genre
                         newBook.review = review
@@ -53,6 +57,7 @@ struct AddBookView: View {
                         
                         dismiss()
                     }
+                    .disabled(isBookValid)
                 }
             }
             .navigationTitle("Add Book")

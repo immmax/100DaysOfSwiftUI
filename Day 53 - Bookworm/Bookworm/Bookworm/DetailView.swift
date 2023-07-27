@@ -16,11 +16,11 @@ struct DetailView: View {
     var body: some View {
         ScrollView {
             ZStack(alignment: .bottomTrailing) {
-                Image(book.genre ?? "Fantasy") // Simulator don't show the image if you don't choose genre ny hands. But on the real iPhone it works ok.
+                Image(book.genre ?? "General") // Simulator don't show the image if you don't choose genre ny hands. But on the real iPhone it works ok.
                     .resizable()
                     .scaledToFit()
                 
-                Text(book.genre?.uppercased() ?? "FANTASY")
+                Text(book.genre?.uppercased() ?? "GENERAL")
                     .font(.caption)
                     .fontWeight(.black)
                     .padding(8)
