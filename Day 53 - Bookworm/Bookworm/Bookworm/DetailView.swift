@@ -13,10 +13,11 @@ struct DetailView: View {
     @Environment(\.managedObjectContext) var moc
     @Environment(\.dismiss) var dismiss
     @State private var showingDeleteAlert = false
+    
     var body: some View {
         ScrollView {
             ZStack(alignment: .bottomTrailing) {
-                Image(book.genre ?? "General") // Simulator don't show the image if you don't choose genre ny hands. But on the real iPhone it works ok.
+                Image(book.genre ?? "General")
                     .resizable()
                     .scaledToFit()
                 
@@ -34,13 +35,13 @@ struct DetailView: View {
                 .font(.title)
                 .foregroundColor(.secondary)
             
-            Text(book.review ?? "No review")
-                .padding()
-            
             RatingView(rating: .constant(Int(book.rating)))
                 .font(.largeTitle)
             
+            Text(book.date?.formatted(date: .abbreviated, time: .shortened) ?? "Unknown date")
             
+            Text(book.review ?? "No review")
+                .padding()
         }
         .navigationTitle(book.title ?? "Unknown Book")
         .navigationBarTitleDisplayMode(.inline)
