@@ -10,40 +10,32 @@ import SwiftUI
 struct ContentView: View {
     @StateObject var habits = Habits()
     @State private var showingAddHabit = false
+    @State private var searchHabit = ""
     
-    
+//    var filteredHabits: [HabitItem]
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             List {
                 ForEach(habits.items) { item in
-                        HStack {
-                            VStack(alignment: .leading) {
-                                Text(item.name)
-                                    .font(.headline)
-                                Text(item.description)
-                                    .opacity(0.7)
-                            }
-                            Spacer()
-                            Text("Count: \(item.completionCount)")
-                        }
-                        .swipeActions(edge: .leading) {
-                            Button {
-                                // Edit habit item action
-                            } label: {
-                                Label("Edit", systemImage: "pencil")
-                            }
-                            .tint(.blue)
+                    NavigationLink {
+                        HabitView(item: item)
+                    } label: {
+                        VStack(alignment: .leading) {
+                            Text(item.name)
+                            Text(item.description)
                         }
                     }
-                    .onDelete(perform: removeItems)
                 }
+                .onDelete(perform: removeItems)
+            }
             .navigationTitle("Habits")
             .toolbar {
                 Button {
                     showingAddHabit = true
                 } label: {
-                    Image(systemName: "plus")
+                    Image(systemName: "plus.circle.fill")
+                        .foregroundColor(.green)
                 }
             }
             .sheet(isPresented: $showingAddHabit) {
@@ -59,6 +51,7 @@ struct ContentView: View {
 }
 
 struct ContentView_Previews: PreviewProvider {
+    
     static var previews: some View {
         ContentView()
     }

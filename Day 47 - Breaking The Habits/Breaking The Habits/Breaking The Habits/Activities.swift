@@ -1,14 +1,14 @@
 //
-//  Habits.swift
+//  Activities.swift
 //  Breaking The Habits
 //
-//  Created by Maxim Datskiy on 6/29/23.
+//  Created by Maxim Datskiy on 7/1/23.
 //
 
 import Foundation
 
-class Habits: ObservableObject {
-    @Published var items = [HabitItem]() {
+class Activities: ObservableObject {
+    @Published var items = [ActivityItem]() {
         didSet {
             let encoder = JSONEncoder()
             
@@ -21,7 +21,7 @@ class Habits: ObservableObject {
     init() {
         // Custom initializer
         if let savedItems = UserDefaults.standard.data(forKey: "Items") {
-            if let decodedItems = try? JSONDecoder().decode([HabitItem].self, from: savedItems) {
+            if let decodedItems = try? JSONDecoder().decode([ActivityItem].self, from: savedItems) {
                 items = decodedItems
                 return
             }
