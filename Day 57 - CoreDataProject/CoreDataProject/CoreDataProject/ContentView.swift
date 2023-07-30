@@ -14,21 +14,52 @@ struct Student: Hashable {
 struct ContentView: View {
     @Environment(\.managedObjectContext) var moc
     
+    @FetchRequest(sortDescriptors: []) var wizards: FetchedResults<Wizard>
+    
+    @State private var wizardName = ""
+    
     let students = [Student(name: "Michael Scott"), Student(name: "Jim Halpert")]
     
     var body: some View {
         VStack {
-            List(students, id: \.self) { student in
-                Text(student.name)
+            Section("Enter wizard's name") {
+                TextField("Wizard's Name", text: $wizardName)
             }
             
-            Button("Save") {
-                if moc.hasChanges {
-                    try? moc.save()
+            Section {
+                List(wizards, id: \.self) { wizard in
+                    Text(wizard.name ?? "Unknown")
                 }
             }
-            .buttonStyle(.borderedProminent)
+            
+            
+            Section {
+                HStack {
+                    Button("Add") {
+                        let wizard = Wizard(context: moc)
+                        wizard.name = wizardName
+                        
+                        wizardName = ""
+                    }
+                    .buttonStyle(.bordered)
+                    .padding(.horizontal)
+                    
+                    Button("Save") {
+                        do {
+                            if moc.hasChanges {
+                                try moc.save()
+                            }
+                            wizardName = ""
+                        } catch {
+                            print(error.localizedDescription)
+                        }
+                    }
+                    .buttonStyle(.borderedProminent)
+                    .padding(.horizontal)
+                }
+            }
         }
+        .padding()
     }
 }
 
