@@ -17,6 +17,7 @@ struct FilteredList<T: NSManagedObject, Content: View>: View {
     @FetchRequest var fetchRequest: FetchedResults<T>
     let content: (T)  -> Content
     var predicateType: String
+    let sortDescriptors: [SortDescriptor<T>]
 
     var body: some View {
         List(fetchRequest, id: \.self) { item in
@@ -24,11 +25,8 @@ struct FilteredList<T: NSManagedObject, Content: View>: View {
         }
     }
 
-    init(filterKey: String, filterValue: String, predicateType: String, @ViewBuilder content: @escaping (T) -> Content) {
-        self.predicateType = predicateType
-        _fetchRequest = FetchRequest<T>(sortDescriptors: [], predicate: NSPredicate(format: "%K \(predicateType) %@", filterKey, filterValue))
-
-    init(filterKey: String, filterValue: String, predicateType: PredicateType, @ViewBuilder content: @escaping (T) -> Content) {
+    init(sortDescriptors: [SortDescriptor<T>], predicateType: PredicateType, filterKey: String, filterValue: String, @ViewBuilder content: @escaping (T) -> Content) {
+        self.sortDescriptors = sortDescriptors
         switch predicateType {
         case .beginsWith:
             self.predicateType = "BEGINSWITH"
@@ -37,7 +35,7 @@ struct FilteredList<T: NSManagedObject, Content: View>: View {
         case .contains:
             self.predicateType = "CONTAINS"
         }
-        _fetchRequest = FetchRequest<T>(sortDescriptors: [], predicate: NSPredicate(format: "%K \(self.predicateType) %@", filterKey, filterValue))
+        _fetchRequest = FetchRequest<T>(sortDescriptors: sortDescriptors, predicate: NSPredicate(format: "%K \(self.predicateType) %@", filterKey, filterValue))
         self.content = content
     }
 }
