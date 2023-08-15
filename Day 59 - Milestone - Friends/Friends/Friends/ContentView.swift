@@ -11,7 +11,20 @@ struct ContentView: View {
     @State private var users = [User]()
     
     var body: some View {
-        Text("Hello")
+        NavigationView {
+            List(users, id: \.id) { user in
+                HStack(alignment: .center) {
+                    Image(systemName: user.isActive ? "checkmark.circle.fill" : "x.circle.fill")
+                        .foregroundColor(user.isActive ? Color.green : Color.pink)
+                    Text(user.name)
+                        .font(.headline)
+                }
+            }
+            .task {
+                await loadData()
+            }
+            .navigationTitle("Friends")
+        }
     }
     
     func loadData() async {
