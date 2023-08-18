@@ -16,10 +16,8 @@ struct ContentView: View {
                 ForEach(users) { user in
                     NavigationLink {
                         VStack {
-                            DetailUserView(user: user)
-//                                .padding()
+                            UserView(user: user)
                         }
-//                        .padding(.vertical)
                     } label: {
                         HStack(alignment: .center) {
                             Image(systemName: user.isActive ? "checkmark.circle.fill" : "x.circle.fill")
@@ -32,13 +30,13 @@ struct ContentView: View {
                             }
                             .foregroundColor(.primary)
                         }
-//                        .padding(.vertical)
                     }
                 }
             }
             .task {
                 await loadData()
             }
+            
             .navigationTitle("Friends")
         }
     }
