@@ -13,7 +13,7 @@ struct Response: Codable {
     var users: [User]
 }
 
-struct User: Codable {
+struct User: Codable, Identifiable {
     var id: String
     var isActive: Bool
     var name: String
@@ -26,7 +26,7 @@ struct User: Codable {
     var friends: [Friend]
 }
 
-struct Friend: Codable {
+struct Friend: Codable, Identifiable {
     var id: String
     var name: String
 }

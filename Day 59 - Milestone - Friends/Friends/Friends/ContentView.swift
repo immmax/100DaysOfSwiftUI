@@ -12,12 +12,28 @@ struct ContentView: View {
     
     var body: some View {
         NavigationView {
-            List(users, id: \.id) { user in
-                HStack(alignment: .center) {
-                    Image(systemName: user.isActive ? "checkmark.circle.fill" : "x.circle.fill")
-                        .foregroundColor(user.isActive ? Color.green : Color.pink)
-                    Text(user.name)
-                        .font(.headline)
+            List {
+                ForEach(users) { user in
+                    NavigationLink {
+                        VStack {
+                            DetailUserView(user: user)
+//                                .padding()
+                        }
+//                        .padding(.vertical)
+                    } label: {
+                        HStack(alignment: .center) {
+                            Image(systemName: user.isActive ? "checkmark.circle.fill" : "x.circle.fill")
+                                .foregroundColor(user.isActive ? Color.green : Color.pink)
+                            VStack(alignment: .leading) {
+                                Text(user.name)
+                                    .font(.headline)
+                                Text(user.company)
+                                    .font(.subheadline)
+                            }
+                            .foregroundColor(.primary)
+                        }
+//                        .padding(.vertical)
+                    }
                 }
             }
             .task {
@@ -28,20 +44,23 @@ struct ContentView: View {
     }
     
     func loadData() async {
-        guard let url = URL(string: "https://www.hackingwithswift.com/samples/friendface.json") else {
-            print("Invalid URL")
-            return
-        }
-        
-        do {
-            let (data, _) = try await URLSession.shared.data(from: url)
-
-            if let decodedResponse = try? JSONDecoder().decode([User].self, from: data) {
-                users = decodedResponse
+        if users.isEmpty {
+            guard let url = URL(string: "https://www.hackingwithswift.com/samples/friendface.json") else {
+                print("Invalid URL")
+                return
             }
             
-        } catch {
-            print("Invalid data")
+            do {
+                let (data, _) = try await URLSession.shared.data(from: url)
+                let decoder = JSONDecoder()
+                decoder.dateDecodingStrategy = .iso8601
+                if let decodedResponse = try? decoder.decode([User].self, from: data) {
+                    users = decodedResponse
+                }
+        
+            } catch {
+                print("Invalid data")
+            }
         }
     }
 }
