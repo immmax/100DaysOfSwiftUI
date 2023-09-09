@@ -23,6 +23,7 @@ struct User: Codable, Identifiable {
     var address: String
     var about: String
     var registered: String
+    var tags: [String]
     var friends: [Friend]
 }
 

@@ -8,12 +8,14 @@
 import SwiftUI
 
 struct ContentView: View {
+    @Environment(\.managedObjectContext) var moc
+    @FetchRequest(sortDescriptors: []) var cachedUsers: FetchedResults<CachedUser>
     @State private var users = [User]()
     
     var body: some View {
         NavigationView {
             List {
-                ForEach(users) { user in
+                ForEach(cachedUsers) { user in
                     NavigationLink {
                         VStack {
                             UserView(user: user)
@@ -23,9 +25,9 @@ struct ContentView: View {
                             Image(systemName: user.isActive ? "checkmark.circle.fill" : "x.circle.fill")
                                 .foregroundColor(user.isActive ? Color.green : Color.pink)
                             VStack(alignment: .leading) {
-                                Text(user.name)
+                                Text(user.wrappedName)
                                     .font(.headline)
-                                Text(user.company)
+                                Text(user.wrappedCompany)
                                     .font(.subheadline)
                             }
                             .foregroundColor(.primary)
@@ -36,30 +38,52 @@ struct ContentView: View {
             .task {
                 await loadData()
             }
-            
             .navigationTitle("Friends")
         }
     }
     
     func loadData() async {
-        if users.isEmpty {
-            guard let url = URL(string: "https://www.hackingwithswift.com/samples/friendface.json") else {
-                print("Invalid URL")
+        guard let url = URL(string: "https://www.hackingwithswift.com/samples/friendface.json") else {
+            print("Invalid URL")
+            return
+        }
+        
+        do {
+            let (data, _) = try await URLSession.shared.data(from: url)
+            
+            let decoder = JSONDecoder()
+            decoder.dateDecodingStrategy = .iso8601
+            guard let users = try? decoder.decode([User].self, from: data) else {
+                print("Failed to decode data")
                 return
             }
-            
-            do {
-                let (data, _) = try await URLSession.shared.data(from: url)
-                let decoder = JSONDecoder()
-                decoder.dateDecodingStrategy = .iso8601
-                if let decodedResponse = try? decoder.decode([User].self, from: data) {
-                    users = decodedResponse
-                }
-        
-            } catch {
-                print("Invalid data")
+        } catch {
+            print("Invalid data")
+        }
+
+        updateCache(with: users)
+    }
+    
+    func updateCache(with users: [User]) {
+        for jsonUser in users {
+            let user = CachedUser(context: moc)
+            user.id = jsonUser.id
+            user.name = jsonUser.name
+            user.about = jsonUser.about
+            user.email = jsonUser.email
+            user.address = jsonUser.address
+            user.company = jsonUser.company
+            user.registered = jsonUser.registered
+            user.isActive = jsonUser.isActive
+            user.age = Int16(jsonUser.age)
+//            try? moc.save()
+//            user.tags = jsonUser.tags.joined(separator: ",")
+//            user.friends = jsonUser.friends
+            if moc.hasChanges {
+                try? moc.save()
             }
         }
+        
     }
 }
 

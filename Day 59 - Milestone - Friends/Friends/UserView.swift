@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct UserView: View {
-    @State private var user: User
+    @State private var user: CachedUser
     @State private var showingInfo = false
     @State private var showingFriends = false
     
@@ -28,12 +28,17 @@ struct UserView: View {
                 
                 if showingInfo {
                     List {
-                        Text("REGISTERED: \(user.registered)")
-                        Text("ADDRESS: \(user.address)")
-                        Text("EMAIL: \(user.email)")
-                        Text("COMPANY: \(user.company)")
+                        Text("REGISTERED: \(user.wrappedRegistered)")
+                        Text("ADDRESS: \(user.wrappedAddress)")
+                        Text("EMAIL: \(user.wrappedEmail)")
+                        Text("COMPANY: \(user.wrappedCompany)")
                         Text("AGE: \(user.age)")
-                        Text("ABOUT: \(user.about)")
+                        Text("ABOUT: \(user.wrappedAbout)")
+                        HStack {
+                            ForEach(user.tagsArray, id: \.self) { tag in
+                                Text(tag.wrappedTagName)
+                            }
+                        }
                     }
                 }
                 
@@ -46,17 +51,17 @@ struct UserView: View {
                 
                 if showingFriends {
                     List {
-                        ForEach(user.friends) { friend in
-                            Text(friend.name)
+                        ForEach(user.friendArray) { friend in
+                            Text(friend.wrappedName)
                         }
                     }
                 }
             }
-            .navigationTitle(user.name)
+            .navigationTitle(user.wrappedName)
         }
     }
     
-    init(user: User) {
+    init(user: CachedUser) {
         self.user = user
     }
 }
