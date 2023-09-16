@@ -11,12 +11,16 @@ struct ContentView: View {
     @State private var image: Image?
     @State private var filterIntensity = 0.3
     
+    @State private var showingImagePicker = false
+    @State private var inputImage: UIImage?
+    
     var body: some View {
         NavigationView {
             VStack {
                 ZStack {
                     Rectangle()
                         .fill(.secondary)
+                        .cornerRadius(15)
                     
                     Text("Tap to select a picture")
                         .foregroundColor(.white)
@@ -49,11 +53,21 @@ struct ContentView: View {
             }
             .padding([.horizontal, .bottom])
             .navigationTitle("Instafilter")
+            .navigationBarTitleDisplayMode(.inline)
+        }
+        .onChange(of: inputImage) { _ in loadImage() }
+        .sheet(isPresented: $showingImagePicker) {
+            ImagePicker(image: $inputImage)
         }
     }
     
+    func loadImage(){
+        guard let inputImage = inputImage else { return }
+        image = Image(uiImage: inputImage)
+    }
+    
     func tap() {
-        
+        showingImagePicker = true
     }
     
     func save() {
