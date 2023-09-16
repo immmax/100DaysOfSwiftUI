@@ -5,49 +5,65 @@
 //  Created by Maxim Datskiy on 9/11/23.
 //
 
-import CoreImage
-import CoreImage.CIFilterBuiltins
 import SwiftUI
 
 struct ContentView: View {
     @State private var image: Image?
-    @State private var inputImage: UIImage?
-    @State private var showingImagePicker = false
+    @State private var filterIntensity = 0.3
     
     var body: some View {
-        VStack {
-            image?
-                .resizable()
-                .scaledToFit()
-            
-            Button("Select Image") {
-                showingImagePicker = true
-            }
-            .buttonStyle(.bordered)
-            .tint(.black)
-            
-            Button("Save Image") {
-                guard let inputImage = inputImage else { return }
+        NavigationView {
+            VStack {
+                ZStack {
+                    Rectangle()
+                        .fill(.secondary)
+                    
+                    Text("Tap to select a picture")
+                        .foregroundColor(.white)
+                        .font(.headline)
+                    
+                    image?
+                        .resizable()
+                        .scaledToFit()
+                }
+                .onTapGesture(perform: tap)
                 
-                let imageSaver = ImageSaver()
-                imageSaver.writeToPhotoAlbum(image: inputImage)
+                
+                HStack {
+                    Text("Intensity")
+                    Slider(value: $filterIntensity, in: 0...1)
+                }
+                .padding(.vertical)
+                
+                HStack {
+                    Button("Apply filter", action: applyFilter)
+                        .buttonStyle(.bordered)
+                        .tint(.blue)
+                    
+                    Spacer()
+                    
+                    Button("Save", action: save)
+                        .buttonStyle(.borderedProminent)
+                        .tint(.mint)
+                }
             }
-            .buttonStyle(.borderedProminent)
-        }
-        .sheet(isPresented: $showingImagePicker) {
-            ImagePicker(image: $inputImage)
-        }
-        .onChange(of: inputImage) { _ in
-            loadImage()
+            .padding([.horizontal, .bottom])
+            .navigationTitle("Instafilter")
         }
     }
     
-    func loadImage() {
-        guard let inputImage = inputImage else { return }
-        image = Image(uiImage: inputImage)
-        
+    func tap() {
         
     }
+    
+    func save() {
+        
+    }
+    
+    func applyFilter() {
+        
+    }
+    
 }
 
 struct ContentView_Previews: PreviewProvider {
