@@ -5,14 +5,19 @@
 //  Created by Maxim Datskiy on 9/11/23.
 //
 
+import CoreImage
+import CoreImage.CIFilterBuiltins
 import SwiftUI
 
 struct ContentView: View {
     @State private var image: Image?
-    @State private var filterIntensity = 0.3
+    @State private var filterIntensity = 0.5
     
     @State private var showingImagePicker = false
     @State private var inputImage: UIImage?
+    
+    @State private var currentFilter = CIFilter.sepiaTone()
+    let context = CIContext()
     
     var body: some View {
         NavigationView {
@@ -36,11 +41,12 @@ struct ContentView: View {
                 HStack {
                     Text("Intensity")
                     Slider(value: $filterIntensity, in: 0...1)
+                        .onChange(of: filterIntensity) {_ in applyProcessing() }
                 }
                 .padding(.vertical)
                 
                 HStack {
-                    Button("Apply filter", action: applyFilter)
+                    Button("Select filter", action: selectFilter)
                         .buttonStyle(.bordered)
                         .tint(.blue)
                     
@@ -61,23 +67,36 @@ struct ContentView: View {
         }
     }
     
-    func loadImage(){
-        guard let inputImage = inputImage else { return }
-        image = Image(uiImage: inputImage)
-    }
-    
     func tap() {
         showingImagePicker = true
+    }
+    
+    func applyProcessing() {
+        currentFilter.intensity = Float(filterIntensity)
+        
+        guard let outputImage = currentFilter.outputImage else { return }
+        if let cgimg = context.createCGImage(outputImage, from: outputImage.extent) {
+            let uiImage = UIImage(cgImage: cgimg)
+            image = Image(uiImage: uiImage)
+        }
+    }
+    
+    func loadImage() {
+        guard let inputImage = inputImage else { return }
+        
+        let beginImage = CIImage(image: inputImage)
+        currentFilter.setValue(beginImage, forKey: kCIInputImageKey)
+        
+        applyProcessing()
+    }
+    
+    func selectFilter() {
+        
     }
     
     func save() {
         
     }
-    
-    func applyFilter() {
-        
-    }
-    
 }
 
 struct ContentView_Previews: PreviewProvider {
