@@ -58,7 +58,8 @@ struct ContentView: View {
                     
                     Button("Save", action: save)
                         .buttonStyle(.borderedProminent)
-                        .tint(.mint)
+                        .tint(image == nil ? .none : .cyan)
+                        .disabled(image == nil)
                 }
             }
             .padding([.horizontal, .bottom])
