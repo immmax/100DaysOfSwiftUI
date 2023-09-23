@@ -14,6 +14,10 @@ struct ContentView: View {
     @State private var filterIntensity = 0.5
     @State private var filterRadius = 100.0
     @State private var filterScale = 100.0
+<<<<<<< Updated upstream
+=======
+    @State private var filterAmount = 50.0
+>>>>>>> Stashed changes
     
     @State private var showingImagePicker = false
     @State private var inputImage: UIImage?
@@ -71,6 +75,18 @@ struct ContentView: View {
                     .padding(.vertical)
                 }
                 
+<<<<<<< Updated upstream
+=======
+                if currentFilter.inputKeys.contains(kCIInputAmountKey) {
+                    HStack {
+                        Text("Scale")
+                        Slider(value: $filterAmount, in: 0.5...200)
+                            .onChange(of: filterAmount) {_ in applyProcessing() }
+                    }
+                    .padding(.vertical)
+                }
+                
+>>>>>>> Stashed changes
                 HStack {
                     Button("Select filter", action: selectFilter)
                         .buttonStyle(.bordered)
@@ -102,6 +118,10 @@ struct ContentView: View {
             Button("Vignette")          { setFilter(CIFilter.vignette()) }
             Button("Pointillize")       { setFilter(CIFilter.pointillize()) }
             Button("Vibrance")          { setFilter(CIFilter.vibrance()) }
+<<<<<<< Updated upstream
+=======
+//            Button()
+>>>>>>> Stashed changes
             Button("Cancel", role: .cancel) { }
         }
     }
