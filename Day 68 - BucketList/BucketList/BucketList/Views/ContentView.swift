@@ -16,6 +16,8 @@ struct ContentView: View {
     
     @State private var locations = [Location]()
     
+    @State private var selectedPlace: Location?
+    
     @State private var isUnlocked = false
     
     var body: some View {
@@ -30,10 +32,14 @@ struct ContentView: View {
                             .background(.white)
                             .clipShape(Circle())
                         Text(location.name)
+                            .fixedSize()
+                    }
+                    .onTapGesture {
+                        selectedPlace = location
                     }
                 }
             }
-                .ignoresSafeArea()
+            .ignoresSafeArea()
             
             Circle()
                 .fill(.blue)
@@ -57,12 +63,19 @@ struct ContentView: View {
                     } label: {
                         Image(systemName: "plus")
                     }
-                    .padding(.horizontal)
+                    .padding()
                     .background(.black.opacity(0.75))
                     .foregroundColor(.white)
                     .font(.title)
                     .clipShape(Circle())
                     .padding(.trailing)
+                }
+            }
+        }
+        .sheet(item: $selectedPlace) { place in
+            EditView(location: place) { newLocation in
+                if let index = locations.firstIndex(of: place) {
+                    locations[index] = newLocation
                 }
             }
         }
@@ -103,7 +116,6 @@ struct ContentView: View {
                     isUnlocked = true
                 } else {
                     // there was a problem
-                    
                 }
             }
         } else {
