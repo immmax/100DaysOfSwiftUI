@@ -5,45 +5,53 @@
 //  Created by Maxim Datskiy on 9/20/23.
 //
 
-import MapKit
+import LocalAuthentication
 import SwiftUI
 
-struct Location: Identifiable {
-    let id = UUID()
-    let name: String
-    let coordinate: CLLocationCoordinate2D
-}
-
 struct ContentView: View {
-    @State private var mapRegion = MKCoordinateRegion(
-        center: CLLocationCoordinate2D(latitude: 51.1, longitude: -0.12),
-        span: MKCoordinateSpan(latitudeDelta: 0.5, longitudeDelta: 0.5))
-    
-    let locations = [
-        Location(name: "Buckingham Palace",
-                 coordinate: CLLocationCoordinate2D(latitude: 51.501, longitude: -0.141)),
-        Location(name: "Tower of London",
-                 coordinate: CLLocationCoordinate2D(latitude: 51.508, longitude: -0.076))
-    ]
+    @State private var isUnlocked = false
     
     var body: some View {
-        NavigationView {
-            Map(coordinateRegion: $mapRegion, annotationItems: locations) { location in
-    //            MapMarker(coordinate: location.coordinate)
-                MapAnnotation(coordinate: location.coordinate) {
-                    NavigationLink {
-                        Text(location.name)
-                    } label: {
-                        Circle()
-                            .stroke(.red, lineWidth: 3)
-                            .frame(width: 44, height: 44)
-//                            .onTapGesture {
-//                                print("Tapped on \(location.name)")
-//                            }
-                    }
+        VStack {
+            if isUnlocked {
+                Text("Unlocked")
+            } else {
+                Text("Locked")
+            }
+            Button("Use Face ID to Unlock", action: authenticate)
+                .buttonStyle(.borderedProminent)
+                .padding()
+            Button() {
+                isUnlocked = false
+            } label: {
+                Image(systemName: "lock.fill")
+            }
+                .tint(.red)
+                .padding()
+        }
+//        .onAppear(perform: authenticate)
+    }
+    
+    func authenticate() {
+        let context = LAContext()
+        var error: NSError?
+        
+        if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) {
+            let reason = "We need to unlock your data"
+            
+            context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics,
+                                   localizedReason: reason) { success, autenticationError in
+                if success {
+                    // authenticated succesfully
+                    isUnlocked = true
+                } else {
+                    // there was a problem
+                    
                 }
             }
-            .navigationTitle("London Explorer")
+        } else {
+            // no biometrics
+            
         }
     }
 }
