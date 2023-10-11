@@ -12,9 +12,9 @@ struct ContentView: View {
     @State private var showingGrid = true
     @State private var searchMission = ""
     @State private var showingAllMissions = true
-    
-    let missions: [Mission] = Bundle.main.decode("missions.json")
-    let astronauts: [String: Astronaut] = Bundle.main.decode("astronauts.json")
+    let files: () = FileManager.default.copyFilesFromBundle(["astronauts.json", "missions.json"])
+    let missions: [Mission] = FileManager.default.decode("missions.json")
+    let astronauts: [String: Astronaut] = FileManager.default.decode("astronauts.json")
     
     var filteredMissions: [Mission] {
         guard !searchMission.isEmpty else {return missions}
