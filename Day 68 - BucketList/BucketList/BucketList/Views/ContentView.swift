@@ -78,28 +78,7 @@ struct ContentView: View {
                     locations[index] = newLocation
                 }
             }
-        }
-        
-        
-        
-//        VStack {
-//            if isUnlocked {
-//                Text("Unlocked")
-//            } else {
-//                Text("Locked")
-//            }
-//            Button("Use Face ID to Unlock", action: authenticate)
-//                .buttonStyle(.borderedProminent)
-//                .padding()
-//            Button() {
-//                isUnlocked = false
-//            } label: {
-//                Image(systemName: "lock.fill")
-//            }
-//                .tint(.red)
-//                .padding()
-//        }
-////        .onAppear(perform: authenticate)
+        } 
     }
     
     func authenticate() {
