@@ -64,11 +64,31 @@ struct ContentView: View {
                 }
             }
         } else {
-            Button("Unlock places", action: viewModel.authenticate)
+            Button("Unlock Places", action: viewModel.authenticate)
                 .padding()
                 .background(.blue)
                 .foregroundColor(.white)
                 .clipShape(Capsule())
+                .alert("Unable to unlock using FaceID", isPresented: $viewModel.showingFaceIDAlert) {
+                    Button("Login with username and password") {
+                        viewModel.showingNonBiometricsAthenticateMethod = true
+                    }
+                }
+                .sheet(isPresented: $viewModel.showingNonBiometricsAthenticateMethod) {
+                    Form {
+                        TextField("Username", text: $viewModel.username)
+                            .padding()
+                        SecureField("Password", text: $viewModel.password)
+                            .padding()
+                        HStack {
+                            Spacer()
+                            Button("Login") { }
+                                .padding()
+                                .buttonStyle(.borderedProminent)
+                            Spacer()
+                        }
+                    }
+                }
         }
     }
 }

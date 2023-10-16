@@ -17,6 +17,10 @@ extension ContentView {
         @Published private(set) var locations: [Location]
         @Published var selectedPlace: Location?
         @Published var isUnlocked = false
+        @Published var showingFaceIDAlert = false
+        @Published var showingNonBiometricsAthenticateMethod = false
+        @Published var username = ""
+        @Published var password = ""
         
         let savePath = FileManager.documentsDirectory.appendingPathComponent("SavedPlaces")
         
@@ -75,11 +79,12 @@ extension ContentView {
                         }
                     } else {
                         // there was a problem
+                        self.showingFaceIDAlert = true
                     }
                 }
             } else {
                 // no biometrics
-                
+                self.showingNonBiometricsAthenticateMethod = true
             }
         }
     }
