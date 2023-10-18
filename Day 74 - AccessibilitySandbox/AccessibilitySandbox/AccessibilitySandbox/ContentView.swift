@@ -8,40 +8,39 @@
 import SwiftUI
 
 struct ContentView: View {
-    let pictures = [
-        "ales-krivec-15949",
-        "galina-n-189483",
-        "kevin-horstmann-141705",
-        "nicolas-tissot-335096"
-    ]
-    
-    let labels = [
-        "Tulips",
-        "Frozen tree buds",
-        "Sunflowers",
-        "Fireworks"
-    ]
-    
-    @State private var selectedPicture = Int.random(in: 0...3)
+   
+    @State private var value = 10
     
     var body: some View {
         VStack {
-            Image(decorative: pictures[selectedPicture])
-                .resizable()
-                .scaledToFit()
-                .onTapGesture {
-                    selectedPicture = Int.random(in: 0...3)
+            Text("Value: \(value)")
+                .padding()
+            
+            HStack(spacing: 20) {
+                Button("Decrement") {
+                    value -= 1
                 }
-                .accessibilityLabel(labels[selectedPicture])
-                .accessibilityAddTraits(.isButton)
-                .accessibilityRemoveTraits(.isImage)
-//                .accessibilityHidden(true)
-            Text("Placeholder")
-            Text("For accessibility")
+                .buttonStyle(.borderedProminent)
+                .padding()
+                
+                Button("Increment") {
+                    value += 1
+                }
+                .buttonStyle(.borderedProminent)
+                .padding()
+            }
+            
         }
-//        .accessibilityElement(children: .combine)
-        .accessibilityElement() // .ignore by default
-        .accessibilityLabel("Good placeholder for accessibility")
+        .accessibilityElement()
+        .accessibilityLabel("Value")
+        .accessibilityValue(String(value))
+        .accessibilityAdjustableAction { direction in
+            switch direction {
+            case .decrement: value -= 1
+            case .increment: value += 1
+            default: print("Not handled")
+            }
+        }
         
     }
 }
