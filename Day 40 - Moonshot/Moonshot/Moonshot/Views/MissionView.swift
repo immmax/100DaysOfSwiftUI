@@ -9,7 +9,7 @@ import SwiftUI
 
 struct MissionView: View {
     let mission: Mission
-    let astronauts: [String: Astronaut] = Bundle.main.decode("astronauts.json")
+    let astronauts: [String: Astronaut] = FileManager.default.decode("astronauts.json")
     
     var body: some View {
         GeometryReader { geometry in
@@ -56,7 +56,7 @@ struct MissionView: View {
 }
 
 struct MissionView_Previews: PreviewProvider {
-    static let missions: [Mission] = Bundle.main.decode("missions.json")
+    static let missions: [Mission] = FileManager.default.decode("missions.json")
     
     static var previews: some View {
         MissionView(mission: missions[0])
