@@ -17,16 +17,7 @@ struct ContentView: View {
                 Section("Business") {
                     ForEach(expences.items) { item in
                         if item.type == "Business" {
-                            HStack {
-                                VStack(alignment: .leading) {
-                                    Text(item.name)
-                                        .font(.headline)
-                                    Text(item.type)
-                                }
-                                Spacer()
-                                Text(item.amount, format: .currency(code: Locale.current.currency?.identifier ?? "USD"))
-                                    .foregroundColor(item.amount < 10 ? .green : item.amount < 100 ? .orange : .red)
-                            }
+                            ExpenseItemView(item)
                         }
                     }
                     .onDelete(perform: removeItems)
@@ -34,16 +25,7 @@ struct ContentView: View {
                 Section("Personal") {
                     ForEach(expences.items) { item in
                         if item.type == "Personal" {
-                            HStack {
-                                VStack(alignment: .leading) {
-                                    Text(item.name)
-                                        .font(.headline)
-                                    Text(item.type)
-                                }
-                                Spacer()
-                                Text(item.amount, format: .currency(code: Locale.current.currency?.identifier ?? "USD"))
-                                    .foregroundColor(item.amount < 10 ? .green : item.amount < 100 ? .orange : .red)
-                            }
+                            ExpenseItemView(item)
                         }
                     }
                     .onDelete(perform: removeItems)
