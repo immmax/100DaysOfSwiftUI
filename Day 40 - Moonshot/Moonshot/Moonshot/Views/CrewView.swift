@@ -24,9 +24,9 @@ struct CrewView: View {
                         AstronautView(astronaut: crewMember.astronaut)
                     } label: {
                         VStack {
-                            Image(crewMember.astronaut.id)
+                            Image(decorative: crewMember.astronaut.id)
                                 .resizable()
-//                                            .scaledToFit()
+                                // .scaledToFit()
                                 .frame(width: 104, height: 72)
                                 .clipShape(RoundedRectangle(cornerRadius: 25))
                                 .overlay(
@@ -41,6 +41,13 @@ struct CrewView: View {
                                 .foregroundColor(.secondary)
                         }
                         .padding(.horizontal)
+                        .accessibilityElement()
+                        .accessibilityLabel(
+                            """
+                            \(crewMember.astronaut.name),
+                            \(crewMember.role)
+                            """
+                        )
                     }
                 }
             }

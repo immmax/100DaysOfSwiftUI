@@ -15,7 +15,7 @@ struct MissionView: View {
         GeometryReader { geometry in
             ScrollView {
                 VStack {
-                    Image(mission.image)
+                    Image(decorative: mission.image)
                         .resizable()
                         .scaledToFit() 
                         .frame(maxWidth: geometry.size.width * 0.6)
@@ -29,11 +29,16 @@ struct MissionView: View {
                         Rectangle()
                             .divider()
                         
-                        Text("Mission Highlights")
-                            .font(.title.bold())
-                            .padding(.bottom, 5)
-                        
-                        Text(mission.description)
+                        VStack {
+                            Text("Mission Highlights")
+                                .font(.title.bold())
+                                .padding(.bottom, 5)
+                            
+                            Text(mission.description)
+                        }
+                        .accessibilityElement()
+                        .accessibilityLabel("Mission Highlights")
+                        .accessibilityHint(mission.description)
 
                         Rectangle()
                             .divider()

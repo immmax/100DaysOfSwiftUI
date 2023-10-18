@@ -22,7 +22,7 @@ struct ListLayout: View {
                         .padding()
                     } label: {
                         HStack {
-                            Image(mission.image)
+                            Image(decorative: mission.image)
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 50, height: 50)

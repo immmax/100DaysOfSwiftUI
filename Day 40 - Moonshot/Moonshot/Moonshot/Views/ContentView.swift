@@ -12,7 +12,13 @@ struct ContentView: View {
     @State private var showingGrid = true
     @State private var searchMission = ""
     @State private var showingAllMissions = true
-    let files: () = FileManager.default.copyFilesFromBundle(["astronauts.json", "missions.json"])
+    
+    let files: () = FileManager.default.copyFilesFromBundle(
+        [
+            "astronauts.json",
+            "missions.json"
+        ]
+    )
     let missions: [Mission] = FileManager.default.decode("missions.json")
     let astronauts: [String: Astronaut] = FileManager.default.decode("astronauts.json")
     
@@ -21,15 +27,20 @@ struct ContentView: View {
         return missions.filter { $0.displayName.localizedCaseInsensitiveContains(searchMission) }
     }
     
-    
     var body: some View {
         
         NavigationStack {
             Group {
                 if showingGrid {
-                    GridLayout(missions: filteredMissions, astronauts: astronauts)
+                    GridLayout(
+                        missions: filteredMissions,
+                        astronauts: astronauts
+                    )
                 } else {
-                    ListLayout(missions: filteredMissions, astronauts: astronauts)
+                    ListLayout(
+                        missions: filteredMissions,
+                        astronauts: astronauts
+                    )
                 }
             }
             .navigationTitle("Moonshot")
@@ -41,7 +52,11 @@ struct ContentView: View {
                 }
                 .buttonStyle(.bordered)
             }
-            .searchable(text: $searchMission, placement: .navigationBarDrawer(displayMode: .always), prompt: "Search a mission") {
+            .searchable(
+                text: $searchMission,
+                placement: .navigationBarDrawer(displayMode: .always),
+                prompt: "Search a mission"
+            ) {
             }
         }
     }
