@@ -32,6 +32,9 @@ struct ContentView: View {
                             Image(systemName: "\(word.count).circle")
                             Text(word)
                         }
+                        .accessibilityElement()
+                        .accessibilityLabel(word)
+                        .accessibilityHint("\(word.count) letters")
                     }
                 }
                 
@@ -39,6 +42,8 @@ struct ContentView: View {
                     Text("\(score)")
                         .font(.caption2)
                 }
+                .accessibilityElement()
+                .accessibilityLabel("Your score is \(score)")
             }
             .navigationTitle(rootWord)
             .onSubmit(addNewWord)
