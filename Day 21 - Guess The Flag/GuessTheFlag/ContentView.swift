@@ -10,19 +10,33 @@ import SwiftUI
 struct FlagImage: View {
     var text: String
     
+    let labels = [
+        "estonia": "Flag with three horizontal stripes of equal size. Top stripe blue, middle stripe black, bottom stripe white",
+        "france": "Flag with three vertical stripes of equal size. Left stripe blue, middle stripe white, right stripe red",
+        "germany": "Flag with three horizontal stripes of equal size. Top stripe black, middle stripe red, bottom stripe gold",
+        "ireland": "Flag with three vertical stripes of equal size. Left stripe green, middle stripe white, right stripe orange",
+        "italy": "Flag with three vertical stripes of equal size. Left stripe green, middle stripe white, right stripe red",
+        "nigeria": "Flag with three vertical stripes of equal size. Left stripe green, middle stripe white, right stripe green",
+        "poland": "Flag with two horizontal stripes of equal size. Top stripe white, bottom stripe red",
+        "russia": "Flag with three horizontal stripes of equal size. Top stripe white, middle stripe blue, bottom stripe red",
+        "spain": "Flag with three horizontal stripes. Top thin stripe red, middle thick stripe gold with a crest on the left, bottom thin stripe red",
+        "uk": "Flag with overlapping red and white crosses, both straight and diagonally, on a blue background",
+        "us": "Flag with red and white stripes of equal size, with white stars on a blue background in the top-left corner"
+    ]
+    
     var body: some View {
         Image(text)
             .renderingMode(.original)
             .clipShape(Capsule())
             .shadow(radius: 5)
-        
+            .accessibilityLabel(labels[text, default: "Unknown flag"])
     }
 }
 struct Title: ViewModifier {
     func body(content: Content) -> some View {
         content
             .font(.largeTitle.bold())
-            .foregroundColor(.mint)
+            .foregroundColor(.white)
     }
 }
 extension View {
@@ -49,7 +63,7 @@ struct ContentView: View {
     
     var body: some View {
         ZStack {
-            //LinearGradient(gradient: Gradient(colors: [.blue, .black]), startPoint: .top, endPoint: .bottom)
+//            LinearGradient(gradient: Gradient(colors: [.blue, .black]), startPoint: .top, endPoint: .bottom)
 //            RadialGradient(stops: [
 //                Gradient.Stop(color: Color(red: 0.1, green: 0.2, blue: 0.45), location: 0.3),
 //                Gradient.Stop(color: Color(red: 0.76, green: 0.15, blue: 0.26), location: 0.3),
@@ -58,11 +72,13 @@ struct ContentView: View {
             
             AngularGradient(colors: [.red, .yellow, .green, .blue, .purple, .red], center: .center)
                 .ignoresSafeArea()
+            
             VStack {
                 Spacer()
                 
                 Text("Guess the Flag")
                     .titleStyle()
+                
                 VStack(spacing: 15) {
                     VStack {
                         Text("Tap the flag of ")
