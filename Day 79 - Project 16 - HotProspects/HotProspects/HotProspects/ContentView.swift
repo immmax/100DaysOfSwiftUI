@@ -7,43 +7,27 @@
 
 import SwiftUI
 
+@MainActor class DelayedUpdater: ObservableObject {
+    var value = 0 {
+        willSet {
+            objectWillChange.send()
+        }
+    }
+    
+    init() {
+        for i in 1...10 {
+            DispatchQueue.main.asyncAfter(deadline: .now() + Double(i)) {
+                self.value += 1
+            }
+        }
+    }
+}
+
 struct ContentView: View {
-    static let tag = "ContentView"  // or "HomeView" or whatever
-    @State private var selectedTab = "Two"
+    @StateObject private var updater = DelayedUpdater()
     
     var body: some View {
-        TabView(selection: $selectedTab) {
-            Text("Tab 1")
-                .padding(50)
-                .background(.bar)
-                .onTapGesture {
-                    selectedTab = "Two"
-                }
-                .tabItem {
-                    Label("Home", systemImage: "house")
-                }
-                .tag("One")
-            Text("Tab 2")
-                .padding(50)
-                .background(.bar)
-                .onTapGesture {
-                    selectedTab = "Three"
-                }
-                .tabItem {
-                    Label("Search", systemImage: "magnifyingglass")
-                }
-                .tag("Two")
-            Text("Tab 3")
-                .padding(50)
-                .background(.bar)
-                .onTapGesture {
-                    selectedTab = "One"
-                }
-                .tabItem {
-                    Label("Profile", systemImage: "person")
-                }
-                .tag("Three")
-        }
+        Text("\(updater.value)")
     }
 }
 
