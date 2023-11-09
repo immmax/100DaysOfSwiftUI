@@ -8,21 +8,28 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var backgroundColor = Color.red
     
     var body: some View {
-        Image("example")
-            .interpolation(.none)
-            .resizable()
-            .scaledToFit()
-            .frame(maxHeight: .infinity)
-            .background(backgroundColor)
-            .ignoresSafeArea()
-            .contextMenu {
-                Button("Red") { backgroundColor = .red }
-                Button("Green") { backgroundColor = .green }
-                Button("Blue") { backgroundColor = .blue }
+        List {
+            ForEach(1...10, id: \.self) { number in
+                Text("\(number)")
+                    .swipeActions(edge: .leading) {
+                        Button {
+                            print("Hi, \(number)")
+                        } label: {
+                            Label("Send Message", systemImage: "message")
+                                .tint(.blue)
+                        }
+                    }
+                    .swipeActions {
+                        Button(role: .destructive) {
+                            print("Deleting \(number)")
+                        } label: {
+                            Label("Delete", systemImage: "trash")
+                        }
+                    }
             }
+        }
     }
 }
 
