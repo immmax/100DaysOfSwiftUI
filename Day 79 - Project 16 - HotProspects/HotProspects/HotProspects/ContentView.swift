@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State private var backgroundColor = Color.red
     
     var body: some View {
         Image("example")
@@ -15,8 +16,13 @@ struct ContentView: View {
             .resizable()
             .scaledToFit()
             .frame(maxHeight: .infinity)
-            .background(.black)
+            .background(backgroundColor)
             .ignoresSafeArea()
+            .contextMenu {
+                Button("Red") { backgroundColor = .red }
+                Button("Green") { backgroundColor = .green }
+                Button("Blue") { backgroundColor = .blue }
+            }
     }
 }
 
