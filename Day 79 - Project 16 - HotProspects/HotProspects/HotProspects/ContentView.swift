@@ -6,29 +6,36 @@
 //
 
 import SwiftUI
+import UserNotifications
 
 struct ContentView: View {
     
     var body: some View {
-        List {
-            ForEach(1...10, id: \.self) { number in
-                Text("\(number)")
-                    .swipeActions(edge: .leading) {
-                        Button {
-                            print("Hi, \(number)")
-                        } label: {
-                            Label("Send Message", systemImage: "message")
-                                .tint(.blue)
-                        }
+        VStack {
+            Button("Request Permittion") {
+                UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
+                    if success {
+                        print("All set!")
+                    } else if let error = error {
+                        print(error.localizedDescription)
                     }
-                    .swipeActions {
-                        Button(role: .destructive) {
-                            print("Deleting \(number)")
-                        } label: {
-                            Label("Delete", systemImage: "trash")
-                        }
-                    }
+                }
             }
+            .buttonStyle(.bordered)
+            
+            Button("Schedule Notification") {
+                let content = UNMutableNotificationContent()
+                content.title = "Water your plants!"
+                content.subtitle = "They look thirsty"
+                content.sound = UNNotificationSound.default
+                
+                let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
+                
+                let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
+                
+                UNUserNotificationCenter.current().add(request)
+            }
+            .buttonStyle(.borderedProminent)
         }
     }
 }
