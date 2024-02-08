@@ -12,6 +12,7 @@ import SwiftUI
 struct MeView: View {
     @State private var name = "Anonimous"
     @State private var email = "you@yoursite.com"
+    @State private var qrCode = UIImage()
     
     let context = CIContext()
     let filter = CIFilter.qrCodeGenerator()
@@ -27,14 +28,29 @@ struct MeView: View {
                     .textContentType(.emailAddress)
                     .font(.title)
                 
-                Image(uiImage: generateQRCode(from: "\(name)\n\(email)"))
+                Image(uiImage: qrCode)
                     .resizable()
                     .interpolation(.none)
                     .scaledToFit()
                     .frame(width: 200, height: 200)
+                    .contextMenu(menuItems: {
+                        Button {
+                            let imageSaver = ImageSaver()
+                            imageSaver.writeToPhotoAlbum(image: qrCode)
+                        } label: {
+                            Label("Save to Photos", systemImage: "square.and.arrow.down")
+                        }
+                    })
+                    .onAppear(perform: updateCode)
+                    .onChange(of: name) { _ in updateCode()}
+                    .onChange(of: email) { _ in updateCode()}
             }
             .navigationTitle("Your QR-code")
         }
+    }
+    
+    func updateCode() {
+        qrCode = generateQRCode(from: "\(name)\n\(email)")
     }
     
     func generateQRCode(from string: String) -> UIImage {
