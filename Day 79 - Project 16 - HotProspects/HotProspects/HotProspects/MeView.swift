@@ -10,8 +10,8 @@ import CoreImage.CIFilterBuiltins
 import SwiftUI
 
 struct MeView: View {
-    @State private var name = "Anonimous"
-    @State private var email = "you@yoursite.com"
+    @AppStorage("name") private var name = "Anonimous"
+    @AppStorage("email") private var email = "you@yoursite.com"
     @State private var qrCode = UIImage()
     
     let context = CIContext()
@@ -33,17 +33,18 @@ struct MeView: View {
                     .interpolation(.none)
                     .scaledToFit()
                     .frame(width: 200, height: 200)
-                    .contextMenu(menuItems: {
-                        Button {
-                            let imageSaver = ImageSaver()
-                            imageSaver.writeToPhotoAlbum(image: qrCode)
-                        } label: {
-                            Label("Save to Photos", systemImage: "square.and.arrow.down")
-                        }
-                    })
+                    .contextMenu {
+                        ShareLink(item: Image(uiImage: qrCode), preview: SharePreview("My QR Code", image: Image(uiImage: qrCode)))
+                        //                        Button {
+                        //                            let imageSaver = ImageSaver()
+                        //                            imageSaver.writeToPhotoAlbum(image: qrCode)
+                        //                        } label: {
+                        //                            Label("Save to Photos", systemImage: "square.and.arrow.down")
+                        //                        }
+                    }
                     .onAppear(perform: updateCode)
-                    .onChange(of: name) { _ in updateCode()}
-                    .onChange(of: email) { _ in updateCode()}
+                    .onChange(of: name, updateCode)
+                    .onChange(of: email, updateCode)
             }
             .navigationTitle("Your QR-code")
         }
@@ -61,7 +62,6 @@ struct MeView: View {
             }
         }
         return UIImage(systemName: "xmark.circle") ?? UIImage()
-        
     }
 }
 
