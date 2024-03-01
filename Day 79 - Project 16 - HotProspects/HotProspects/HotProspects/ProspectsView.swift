@@ -19,6 +19,7 @@ struct ProspectsView: View {
     @Query(sort: \Prospect.name) var prospects: [Prospect]
     @State private var isShowingScanner = false
     @State private var selectedProspects = Set<Prospect>()
+    @State private var isShowingEditor = false
     
     let filter: FilterType
     
@@ -36,11 +37,15 @@ struct ProspectsView: View {
     var body: some View {
         NavigationStack {
             List(prospects, selection: $selectedProspects) { prospect in
-                VStack(alignment: .leading) {
-                    Text(prospect.name)
-                        .font(.headline)
-                    Text(prospect.email)
-                        .foregroundColor(.secondary)
+                NavigationLink {
+                    EditProspectView(prospect: prospect)
+                } label: {
+                    VStack(alignment: .leading) {
+                        Text(prospect.name)
+                            .font(.headline)
+                        Text(prospect.email)
+                            .foregroundColor(.secondary)
+                    }
                 }
                 .swipeActions {
                     Button("Delete", systemImage: "trash", role: .destructive) {
@@ -74,13 +79,13 @@ struct ProspectsView: View {
                     }
                     
                 }
-                ToolbarItem(placement: .topBarTrailing) {
-                    // temp button for tests
-                    Button("Add") {
-                        let prospect = Prospect(name: "Max", email: "max@gmail.com", isContacted: false)
-                        modelContext.insert(prospect)
-                    }
-                }
+//                ToolbarItem(placement: .topBarTrailing) {
+//                    // temp button for tests
+//                    Button("Add") {
+//                        let prospect = Prospect(name: "Max", email: "max@gmail.com", isContacted: false)
+//                        modelContext.insert(prospect)
+//                    }
+//                }
                 
                 ToolbarItem(placement: .topBarLeading) {
                     EditButton()
@@ -96,6 +101,9 @@ struct ProspectsView: View {
                 CodeScannerView(codeTypes: [.qr],
                                 simulatedData: "Max Datskii\nmax@hemail .com",
                                 completion: handleScan)
+            }
+            .onAppear {
+                selectedProspects = []
             }
         }
     }
