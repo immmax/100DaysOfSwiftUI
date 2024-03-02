@@ -9,7 +9,7 @@ import SwiftUI
 import SwiftData
 
 struct EditProspectView: View {
-    @State var prospect: Prospect
+    @Bindable var prospect: Prospect
     
     var body: some View {
         Form {
@@ -25,9 +25,20 @@ struct EditProspectView: View {
                     .textContentType(.emailAddress)
             }
         }
+        .navigationTitle("Edit Prospect")
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
 
-//#Preview {
-//    EditProspectView(prospect: Prospect(name: "Sasha", email: "sasha@gmail.com", isContacted: false))
-//}
+#Preview {
+    do {
+        let config = ModelConfiguration(isStoredInMemoryOnly: true)
+        let container = try ModelContainer(for: Prospect.self, configurations: config)
+        let prospect = Prospect(name: "TaylorSwift", email: "taylor@email.com", isContacted: false)
+        
+        return EditProspectView(prospect: prospect)
+            .modelContainer(container)
+    } catch {
+        return Text("Failed to create container: \(error.localizedDescription)")
+    }
+}

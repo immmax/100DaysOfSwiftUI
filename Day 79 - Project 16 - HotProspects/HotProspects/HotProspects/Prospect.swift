@@ -12,13 +12,14 @@ import SwiftData
 class Prospect {
     var name: String
     var email: String
+    var dateAdded = Date.now
     var isContacted: Bool
     
     init(name: String, email: String, isContacted: Bool) {
         self.name = name
         self.email = email
         self.isContacted = isContacted
-    } 
+    }
 }
 
 //class Prospect: Identifiable, Codable {

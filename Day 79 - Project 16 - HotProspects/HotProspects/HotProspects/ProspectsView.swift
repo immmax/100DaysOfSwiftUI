@@ -10,18 +10,46 @@ import SwiftData
 import SwiftUI
 import UserNotifications
 
+enum SortOption: String, CaseIterable {
+    case byName, mostRecent
+}
+
+extension SortOption {
+    var systemImage: String {
+        switch self {
+        case .byName:
+            "textformat.size.larger"
+        case .mostRecent:
+            "calendar"
+        }
+    }
+    
+    var description: String {
+        switch self {
+        case .byName:
+            return "By Name"
+        case .mostRecent:
+            return "Most Recent"
+        }
+    }
+}
+
 struct ProspectsView: View {
+    @State private var number = 0
+    
     enum FilterType {
         case none, contacted, uncontacted
     }
     
     @Environment(\.modelContext) var modelContext
-    @Query(sort: \Prospect.name) var prospects: [Prospect]
+    @Query var prospects: [Prospect]
+    
     @State private var isShowingScanner = false
-    @State private var selectedProspects = Set<Prospect>()
     @State private var isShowingEditor = false
+    @State private var selectedProspects = Set<Prospect>() // for multiple remove
     
     let filter: FilterType
+    @State private var selectedSortOption = SortOption.allCases.first!
     
     var title: String {
         switch filter {
@@ -36,15 +64,25 @@ struct ProspectsView: View {
     
     var body: some View {
         NavigationStack {
-            List(prospects, selection: $selectedProspects) { prospect in
+            List(prospects.sort(on: selectedSortOption), selection: $selectedProspects) { prospect in
                 NavigationLink {
                     EditProspectView(prospect: prospect)
                 } label: {
-                    VStack(alignment: .leading) {
-                        Text(prospect.name)
-                            .font(.headline)
-                        Text(prospect.email)
-                            .foregroundColor(.secondary)
+                    HStack {
+                        if filter == .none {
+                            Image(systemName: prospect.isContacted ? "person.crop.circle.badge.plus" : "person.crop.circle.badge.xmark")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 40, height: 40)
+                                .foregroundStyle(prospect.isContacted ? .green : .red)
+                        }
+                        
+                        VStack(alignment: .leading) {
+                            Text(prospect.name)
+                                .font(.headline)
+                            Text(prospect.email)
+                                .foregroundColor(.secondary)
+                        }
                     }
                 }
                 .swipeActions {
@@ -58,7 +96,7 @@ struct ProspectsView: View {
                         }
                         .tint(.blue)
                     } else {
-                        Button("Mark Contacted", systemImage: "person.crop.circle.fill.badge.checkmark") {
+                        Button("Mark Contacted", systemImage:"person.crop.circle.fill.badge.checkmark") {
                             prospect.isContacted.toggle()
                         }
                         .tint(.green)
@@ -77,15 +115,27 @@ struct ProspectsView: View {
                     Button("Scan", systemImage: "qrcode.viewfinder") {
                         isShowingScanner = true
                     }
-                    
                 }
-//                ToolbarItem(placement: .topBarTrailing) {
-//                    // temp button for tests
-//                    Button("Add") {
-//                        let prospect = Prospect(name: "Max", email: "max@gmail.com", isContacted: false)
-//                        modelContext.insert(prospect)
-//                    }
-//                }
+                ToolbarItem(placement: .topBarTrailing) {
+                    // temp button for tests
+                    Button("Add") {
+                        let prospect = Prospect(name: "Max \(number)", email: "max@gmail.com", isContacted: false)
+                        modelContext.insert(prospect)
+                        number += 1
+                    }
+                }
+                
+                ToolbarItem(placement: .topBarTrailing) {
+                    Menu("Sort Prospects", systemImage: "arrow.up.arrow.down") {
+                        Picker("Sort", selection: $selectedSortOption) {
+                            ForEach(SortOption.allCases, id: \.rawValue) {option in
+                                Label(option.description,
+                                      systemImage: option.systemImage)
+                                    .tag(option)
+                            }
+                        }
+                    }
+                }
                 
                 ToolbarItem(placement: .topBarLeading) {
                     EditButton()
@@ -99,7 +149,7 @@ struct ProspectsView: View {
             }
             .sheet(isPresented: $isShowingScanner) {
                 CodeScannerView(codeTypes: [.qr],
-                                simulatedData: "Max Datskii\nmax@hemail .com",
+                                simulatedData: "Max Datskii\nmax@email .com",
                                 completion: handleScan)
             }
             .onAppear {
@@ -112,11 +162,12 @@ struct ProspectsView: View {
         self.filter = filter
         
         if filter != .none {
+            
             let showContactedOnly = filter == .contacted
             
             _prospects = Query(filter: #Predicate {
                 $0.isContacted == showContactedOnly
-            }, sort: [SortDescriptor(\Prospect.name)])
+            })
         }
     }
     
@@ -185,6 +236,17 @@ struct ProspectsView: View {
                     }
                 }
             }
+        }
+    }
+}
+
+private extension [Prospect] {
+    func sort(on option: SortOption) -> [Prospect] {
+        switch option {
+        case .byName:
+            self.sorted(by: {$0.name < $1.name})
+        case .mostRecent:
+            self.sorted(by: {$0.dateAdded < $1.dateAdded})
         }
     }
 }
