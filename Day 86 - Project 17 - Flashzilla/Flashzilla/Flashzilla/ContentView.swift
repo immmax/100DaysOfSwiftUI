@@ -17,20 +17,36 @@ struct ContentView: View {
 //    @State private var offset = CGSize.zero
 //    @State private var isDragging = false
     
-    let timer = Timer.publish(every: 1, tolerance: 0.5, on: .main, in: .common).autoconnect()
-    @State private var counter = 0
+//    let timer = Timer.publish(every: 1, tolerance: 0.5, on: .main, in: .common).autoconnect()
+//    @State private var counter = 0
+    
+    @Environment(\.scenePhase) var scenePhase
+    
     var body: some View {
         // DAY 97 BELOW
-        // Part 1
+        
+        // Part 2
         Text("Hello, world!")
-            .onReceive(timer) { time in
-                if counter == 5 {
-                    timer.upstream.connect().cancel()
-                } else {
-                    print("The time is now \(time)")
+            .onChange(of: scenePhase) { oldPhase, newPhase in
+                if newPhase == .active {
+                    print("Active")
+                } else if newPhase == .inactive {
+                    print("Inactive")
+                } else if newPhase == .background {
+                    print("Background")
                 }
-                counter += 1
             }
+        
+        // Part 1
+//        Text("Hello, world!")
+//            .onReceive(timer) { time in
+//                if counter == 5 {
+//                    timer.upstream.connect().cancel()
+//                } else {
+//                    print("The time is now \(time)")
+//                }
+//                counter += 1
+//            }
     }
 
         // DAY 86 BELOW
