@@ -17,20 +17,36 @@ struct ContentView: View {
 //    @State private var offset = CGSize.zero
 //    @State private var isDragging = false
     
+    let timer = Timer.publish(every: 1, tolerance: 0.5, on: .main, in: .common).autoconnect()
+    @State private var counter = 0
     var body: some View {
+        // DAY 97 BELOW
+        // Part 1
+        Text("Hello, world!")
+            .onReceive(timer) { time in
+                if counter == 5 {
+                    timer.upstream.connect().cancel()
+                } else {
+                    print("The time is now \(time)")
+                }
+                counter += 1
+            }
+    }
+
+        // DAY 86 BELOW
         // part 3 below
-        VStack {
-            Text("Hello")
-            
-            Spacer()
-                .frame(height: 100)
-            
-            Text("World")
-        }
-        .contentShape(.rect)
-        .onTapGesture {
-            print("VStack tapped!")
-        }
+//        VStack {
+//            Text("Hello")
+//            
+//            Spacer()
+//                .frame(height: 100)
+//            
+//            Text("World")
+//        }
+//        .contentShape(.rect)
+//        .onTapGesture {
+//            print("VStack tapped!")
+//        }
         
 //        ZStack {
 //            Rectangle()
@@ -128,7 +144,7 @@ struct ContentView: View {
 //                    }
 //            )
             
-    }
+//    }
 }
 
 #Preview {
