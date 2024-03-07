@@ -20,17 +20,50 @@ extension VerticalAlignment {
 
 struct ContentView: View {
     var body: some View {
-//        DAY 1
+//        DAY 2/3 - Day 93
         
-//        PART 5 - Absolute positioning for SwiftUI views
-        Text("Жаксы Рахмет")
-//            .position(x:100, y:100)
-            .offset(x:100, y:100)
-            .background(.cyan)
-            .position(x:100, y:100)
+//        PART 4/4 -
+        
+//        PART 3/4 -
+        
+//        PART 2/4 -
+        
+//        PART 1/4 - Resizing images to fit the screen using GeometryReader
+        HStack {
+            Text("IMPORTANT")
+                .frame(width: 200)
+                .background(.cyan)
+            
+            GeometryReader { proxy in
+                Image(.dumb)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: proxy.size.width * 0.8)
+                    .frame(width: proxy.size.width, height: proxy.size.height)
+//                    .containerRelativeFrame(.horizontal) { size, axis in
+//                        size * 0.8
+//                    }
+            }
+        }
+        
+//        GeometryReader { proxy in
+//            Image(.dumb)
+//                .resizable()
+//                .scaledToFit()
+//                .frame(width: proxy.size.width * 0.8)
+//        }
+        
+//        DAY 1/3 - Day 92
+        
+//        PART 5/5 - Absolute positioning for SwiftUI views
+//        Text("Жаксы Рахмет")
+////            .position(x:100, y:100)
 //            .offset(x:100, y:100)
+//            .background(.cyan)
+//            .position(x:100, y:100)
+////            .offset(x:100, y:100)
         
-//        PART 4 - How to create a custom alignment guide
+//        PART 4/5 - How to create a custom alignment guide
         
 //        HStack(alignment: .midAccountAndName) {
 //            VStack {
@@ -59,7 +92,7 @@ struct ContentView: View {
 //            }
 //        }
         
-//        PART 3 - Alignment and alignment guides
+//        PART 3/5 - Alignment and alignment guides
 
 //        VStack(alignment: .leading) {
 //            ForEach(1..<10) { position in
@@ -103,7 +136,7 @@ struct ContentView: View {
 //            .frame(width: 300, height: 300, alignment: .leading)
 //            .background(.cyan)
         
-//        PART 2 - How layout works in SwiftUI
+//        PART 2/5 - How layout works in SwiftUI
         
 //        Color.cyan
         
@@ -115,7 +148,7 @@ struct ContentView: View {
 //            .background(.red)
 //            .clipShape(.capsule)
         
-//        PART 1 - Create the Project
+//        PART 1/5 - Create the Project
     }
 }
 
