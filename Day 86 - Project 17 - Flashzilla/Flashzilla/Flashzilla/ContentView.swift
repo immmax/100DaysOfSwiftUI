@@ -27,6 +27,8 @@ struct ContentView: View {
     @Environment(\.scenePhase) var scenePhase
     @State private var isActive = true
     
+    @State private var isAnswerWrong = false
+    
     var body: some View {
         ZStack {
             Image(decorative: "background")
@@ -44,7 +46,8 @@ struct ContentView: View {
                 
                 ZStack {
                     ForEach(0..<cards.count, id: \.self) { index in
-                        CardView(card: cards[index]) {
+                        CardView(card: cards[index]) { isWrong in
+                            isAnswerWrong = isWrong
                             withAnimation {
                                 removeCard(at: index)
                             }
@@ -58,10 +61,11 @@ struct ContentView: View {
                 
                 if cards.isEmpty {
                     Button("Start Again", action: resetCards)
-                        .padding()
+                        .padding(10)
                         .background(.white)
                         .foregroundStyle(.black)
                         .clipShape(.capsule)
+                        .padding(10)
                 }
             }
             
@@ -144,6 +148,12 @@ struct ContentView: View {
         }
         .sheet(isPresented: $showingEditScreen, onDismiss: resetCards, content: EditCardsView.init)
         .onAppear(perform: resetCards)
+    }
+    
+    func moveCardToBottom(at index: Int) {
+        guard index >= 0 else { return }
+        
+        cards.append(cards[index])
     }
     
     func removeCard(at index: Int) {
