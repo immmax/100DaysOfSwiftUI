@@ -22,34 +22,42 @@ struct ContentView: View {
     var body: some View {
 //        DAY 1
         
+//        PART 5 - Absolute positioning for SwiftUI views
+        Text("Жаксы Рахмет")
+//            .position(x:100, y:100)
+            .offset(x:100, y:100)
+            .background(.cyan)
+            .position(x:100, y:100)
+//            .offset(x:100, y:100)
+        
 //        PART 4 - How to create a custom alignment guide
         
-        HStack(alignment: .midAccountAndName) {
-            VStack {
-                Text("Twitter")
-                    .font(.largeTitle)
-                Text("@immmax")
-                    .alignmentGuide(.midAccountAndName, computeValue: { d in
-                        d[VerticalAlignment.center]
-                    })
-                
-                Image(.dumb)
-                    .resizable()
-                    .frame(width: 64, height: 64)
-            }
-            
-            VStack {
-                Text("No way")
-                Text("Full name:")
-                
-                Text("JAMES CARRY")
-                    .font(.largeTitle)
-                    .alignmentGuide(.midAccountAndName, computeValue: { d in
-                        d[VerticalAlignment.center]
-                    })
-                Text("Kidding me?")
-            }
-        }
+//        HStack(alignment: .midAccountAndName) {
+//            VStack {
+//                Text("Twitter")
+//                    .font(.largeTitle)
+//                Text("@immmax")
+//                    .alignmentGuide(.midAccountAndName, computeValue: { d in
+//                        d[VerticalAlignment.center]
+//                    })
+//                
+//                Image(.dumb)
+//                    .resizable()
+//                    .frame(width: 64, height: 64)
+//            }
+//            
+//            VStack {
+//                Text("No way")
+//                Text("Full name:")
+//                
+//                Text("JAMES CARRY")
+//                    .font(.largeTitle)
+//                    .alignmentGuide(.midAccountAndName, computeValue: { d in
+//                        d[VerticalAlignment.center]
+//                    })
+//                Text("Kidding me?")
+//            }
+//        }
         
 //        PART 3 - Alignment and alignment guides
 
