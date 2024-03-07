@@ -9,13 +9,21 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
-        }
-        .padding()
+//        DAY 1
+        
+//        PART 2 - How layout works in SwiftUI
+        
+        Color.cyan
+        
+//        Text("Hello, world!")
+//            .padding()
+//            .background(.mint)
+//            .clipShape(.capsule)
+//            .padding()
+//            .background(.red)
+//            .clipShape(.capsule)
+        
+//        PART 1 - Create the Project
     }
 }
 
