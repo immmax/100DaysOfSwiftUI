@@ -53,32 +53,51 @@ extension VerticalAlignment {
 }
 
 struct ContentView: View {
-//    let colors: [Color] = [.red, .green, .blue, .orange, .pink, .purple, .yellow]
+    let colors: [Color] = [.red, .green, .blue, .orange, .pink, .purple, .yellow]
     
     var body: some View {
+//        DAY 3/3 - Day 94 - CHALLENGE
+        GeometryReader {fullView in
+            ScrollView(.vertical) {
+                ForEach(0..<50) { index in
+                    GeometryReader { proxy in
+                        Text("Row #\(index)")
+                            .font(.title)
+                            .frame(maxWidth: .infinity)
+                            .background(colors[index % 7].opacity(proxy.frame(in: .global).minY / 250.0))
+                            .rotation3DEffect(
+                                .degrees(proxy.frame(in: .global).minY - fullView.size.height / 2) / 5,
+                                axis: (x: 0, y: 1, z: 0)
+                            )
+                    }
+                    .frame(height: 40)
+                }
+            }
+        }
+        
 //        DAY 2/3 - Day 93
         
 //        PART 4/4 - ScrollView effects using visualEffect() and scrollTargetBehavior()
-        ScrollView(.horizontal, showsIndicators: false) {
-            HStack(spacing: 0) {
-                ForEach(1..<20) {number in
-                    Text("Number \(number)")
-                        .font(.largeTitle)
-                        .padding()
-                        .background(.red)
-                        .frame(width: 200, height: 200)
-                        .visualEffect { content, proxy in
-                            content
-                                .rotation3DEffect(
-                                    .degrees(-proxy.frame(in: .global).minX / 8),
-                                    axis: (x: 0, y: 1, z: 0)
-                                )
-                        }
-                }
-            }
-            .scrollTargetLayout()
-        }
-        .scrollTargetBehavior(.viewAligned)
+//        ScrollView(.horizontal, showsIndicators: false) {
+//            HStack(spacing: 0) {
+//                ForEach(1..<20) {number in
+//                    Text("Number \(number)")
+//                        .font(.largeTitle)
+//                        .padding()
+//                        .background(.red)
+//                        .frame(width: 200, height: 200)
+//                        .visualEffect { content, proxy in
+//                            content
+//                                .rotation3DEffect(
+//                                    .degrees(-proxy.frame(in: .global).minX / 8),
+//                                    axis: (x: 0, y: 1, z: 0)
+//                                )
+//                        }
+//                }
+//            }
+//            .scrollTargetLayout()
+//        }
+//        .scrollTargetBehavior(.viewAligned)
         
 //        PART 3/4 - ScrollView effects using GeometryReader
 
