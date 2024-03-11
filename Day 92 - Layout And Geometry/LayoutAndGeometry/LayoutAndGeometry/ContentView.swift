@@ -55,6 +55,8 @@ import SwiftUI
 struct ContentView: View {
 //    let colors: [Color] = [.red, .green, .blue, .orange, .pink, .purple, .yellow]
     
+    @State private var selectedRowIndex: Int? = nil
+    
     var body: some View {
 //        DAY 3/3 - Day 94 - CHALLENGE
         GeometryReader { fullView in
@@ -84,7 +86,7 @@ struct ContentView: View {
                                     endPoint: .topTrailing
                                 )
                             )
-                            .opacity(proxy.frame(in: .global).minY / 250.0)
+                            .opacity((proxy.frame(in: .global).midY - 150) * 0.003)
                             .scaleEffect(0.5 + (proxy.frame(in: .global).minY / (proxy.frame(in: .global).minY + fullView.size.height)))
                             .rotation3DEffect(
                                 .degrees(proxy.frame(in: .global).minY - fullView.size.height / 2) / 5,
@@ -95,6 +97,7 @@ struct ContentView: View {
                 }
                 .scrollTargetLayout()
             }
+            .scrollPosition(id: $selectedRowIndex, anchor: .center)
             .scrollTargetBehavior(.viewAligned)
         }
         
