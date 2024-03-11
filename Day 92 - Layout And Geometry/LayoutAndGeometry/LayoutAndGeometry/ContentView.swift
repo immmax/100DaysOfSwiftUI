@@ -53,18 +53,58 @@ extension VerticalAlignment {
 }
 
 struct ContentView: View {
+//    let colors: [Color] = [.red, .green, .blue, .orange, .pink, .purple, .yellow]
+    
     var body: some View {
 //        DAY 2/3 - Day 93
         
 //        PART 4/4 -
         
-//        PART 3/4 -
+//        PART 3/4 - ScrollView effects using GeometryReader
+
+        ScrollView(.horizontal, showsIndicators: false) {
+            HStack(spacing: 0) {
+                ForEach(1..<20) {number in
+                    GeometryReader { proxy in
+                        Text("Number \(number)")
+                            .font(.largeTitle)
+                            .padding()
+                            .background(.red)
+                            .rotation3DEffect(
+                                .degrees(-proxy.frame(in: .global).minX / 8),
+                                axis: (x: 0, y: 1, z: 0)
+                            )
+                            .frame(width: 200, height: 200)
+                    }
+                    .frame(width: 200, height: 200)
+                }
+            }
+        }
+        
+//        GeometryReader {fullView in
+//            ScrollView {
+//                ForEach(0..<50) {index in
+//                    GeometryReader {proxy in
+//                        Text("Row #\(index)")
+//                            .font(.title)
+//                            .frame(maxWidth: .infinity)
+//                            .background(colors[index % 7].opacity(0.6))
+//                            .rotation3DEffect(
+//                                .degrees(proxy.frame(in: .global).minY - fullView.size.height / 2) / 5,
+//                                axis: (x: 0, y: 1, z: 0)
+//                            )
+//                    }
+//                    .frame(height: 40)
+//                }
+//            }
+//        }
+        
         
 //        PART 2/4 - Understanding frames and coordinates inside GeometryReader
         
-        OuterView()
-            .background(.red)
-            .coordinateSpace(name: "Custom")
+//        OuterView()
+//            .background(.red)
+//            .coordinateSpace(name: "Custom")
         
 //        VStack {
 //            GeometryReader {proxy in
