@@ -7,64 +7,85 @@
 
 import SwiftUI
 
-struct OuterView: View {
-    var body: some View {
-        VStack {
-            Text("Top")
-            
-            InnerView()
-                .background(.green)
-            
-            Text("Bottom")
-        }
-    }
-}
-
-struct InnerView: View {
-    var body: some View {
-        HStack {
-            Text("Left")
-            
-            GeometryReader { proxy in
-                Text("Center")
-                    .background(.cyan)
-                    .onTapGesture {
-                        print("Global center: \(proxy.frame(in: .global).midX) X \(proxy.frame(in: .global).midY)")
-                        print("Custom center: \(proxy.frame(in: .named("Custom")).midX) X \(proxy.frame(in: .named("Custom")).midY)")
-                        print("Local center: \(proxy.frame(in: .local).midX) X \(proxy.frame(in: .local).midY)")
-                    }
-            }
-            .background(.orange)
-            
-            Text("Right")
-        }
-    }
-}
+//struct OuterView: View {
+//    var body: some View {
+//        VStack {
+//            Text("Top")
+//            
+//            InnerView()
+//                .background(.green)
+//            
+//            Text("Bottom")
+//        }
+//    }
+//}
+//
+//struct InnerView: View {
+//    var body: some View {
+//        HStack {
+//            Text("Left")
+//            
+//            GeometryReader { proxy in
+//                Text("Center")
+//                    .background(.cyan)
+//                    .onTapGesture {
+//                        print("Global center: \(proxy.frame(in: .global).midX) X \(proxy.frame(in: .global).midY)")
+//                        print("Custom center: \(proxy.frame(in: .named("Custom")).midX) X \(proxy.frame(in: .named("Custom")).midY)")
+//                        print("Local center: \(proxy.frame(in: .local).midX) X \(proxy.frame(in: .local).midY)")
+//                    }
+//            }
+//            .background(.orange)
+//            
+//            Text("Right")
+//        }
+//    }
+//}
 
 //        Day 1 - PART 4 - How to create a custom alignment guide
-extension VerticalAlignment {
-    enum MidAccountAndName: AlignmentID {
-        static func defaultValue(in context: ViewDimensions) -> CGFloat {
-            context[.top]
-        }
-    }
-    
-    static let midAccountAndName = VerticalAlignment(MidAccountAndName.self)
-}
+//extension VerticalAlignment {
+//    enum MidAccountAndName: AlignmentID {
+//        static func defaultValue(in context: ViewDimensions) -> CGFloat {
+//            context[.top]
+//        }
+//    }
+//    
+//    static let midAccountAndName = VerticalAlignment(MidAccountAndName.self)
+//}
 
 struct ContentView: View {
-    let colors: [Color] = [.red, .green, .blue, .orange, .pink, .purple, .yellow]
+//    let colors: [Color] = [.red, .green, .blue, .orange, .pink, .purple, .yellow]
     
     var body: some View {
 //        DAY 3/3 - Day 94 - CHALLENGE
-        GeometryReader {fullView in
+        GeometryReader { fullView in
             ScrollView(.vertical) {
                 ForEach(0..<50) { index in
                     GeometryReader { proxy in
                         Text("Row #\(index)")
-                            .font(.title)
+                            .font(.title.bold())
+                            .foregroundStyle(.white)
+                            .shadow(color: .black, radius: 5)
                             .frame(maxWidth: .infinity)
-                            .background(colors[index % 7].opacity(proxy.frame(in: .global).minY / 250.0))
+                            .background(
+                                LinearGradient(
+                                    gradient: Gradient(colors: [
+                                        Color(
+                                            hue: Double(index) / Double(49),
+                                            saturation: Double(index) / Double(55) + 0.3,
+                                            brightness: 1
+                                        ),
+                                        Color(
+                                            hue: Double(index) / Double(49),
+                                            saturation: Double(proxy.frame(in: .global).minX) + 0.1,
+                                            brightness: 1
+                                        )
+                                ]),
+                                    startPoint: .bottomLeading,
+                                    endPoint: .topTrailing
+                                )
+                            )
+                            .opacity(proxy.frame(in: .global).minY / 250.0)
+                            .scaleEffect(0.5 + (proxy.frame(in: .global).minY / (proxy.frame(in: .global).minY + fullView.size.height)))
                             .rotation3DEffect(
                                 .degrees(proxy.frame(in: .global).minY - fullView.size.height / 2) / 5,
                                 axis: (x: 0, y: 1, z: 0)
@@ -72,7 +93,9 @@ struct ContentView: View {
                     }
                     .frame(height: 40)
                 }
+                .scrollTargetLayout()
             }
+            .scrollTargetBehavior(.viewAligned)
         }
         
 //        DAY 2/3 - Day 93
