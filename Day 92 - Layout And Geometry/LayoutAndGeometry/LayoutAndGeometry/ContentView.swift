@@ -7,7 +7,41 @@
 
 import SwiftUI
 
-//        PART 4 - How to create a custom alignment guide
+struct OuterView: View {
+    var body: some View {
+        VStack {
+            Text("Top")
+            
+            InnerView()
+                .background(.green)
+            
+            Text("Bottom")
+        }
+    }
+}
+
+struct InnerView: View {
+    var body: some View {
+        HStack {
+            Text("Left")
+            
+            GeometryReader { proxy in
+                Text("Center")
+                    .background(.cyan)
+                    .onTapGesture {
+                        print("Global center: \(proxy.frame(in: .global).midX) X \(proxy.frame(in: .global).midY)")
+                        print("Custom center: \(proxy.frame(in: .named("Custom")).midX) X \(proxy.frame(in: .named("Custom")).midY)")
+                        print("Local center: \(proxy.frame(in: .local).midX) X \(proxy.frame(in: .local).midY)")
+                    }
+            }
+            .background(.orange)
+            
+            Text("Right")
+        }
+    }
+}
+
+//        Day 1 - PART 4 - How to create a custom alignment guide
 extension VerticalAlignment {
     enum MidAccountAndName: AlignmentID {
         static func defaultValue(in context: ViewDimensions) -> CGFloat {
@@ -26,26 +60,42 @@ struct ContentView: View {
         
 //        PART 3/4 -
         
-//        PART 2/4 -
+//        PART 2/4 - Understanding frames and coordinates inside GeometryReader
+        
+        OuterView()
+            .background(.red)
+            .coordinateSpace(name: "Custom")
+        
+//        VStack {
+//            GeometryReader {proxy in
+//                Text("Hello, world!")
+//                    .frame(width: proxy.size.width * 0.9)
+//                    .background(.red)
+//            }
+//            .background(.green)
+//            
+//            Text("More text")
+//                .background(.blue)
+//        }
         
 //        PART 1/4 - Resizing images to fit the screen using GeometryReader
-        HStack {
-            Text("IMPORTANT")
-                .frame(width: 200)
-                .background(.cyan)
-            
-            GeometryReader { proxy in
-                Image(.dumb)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: proxy.size.width * 0.8)
-                    .frame(width: proxy.size.width, height: proxy.size.height)
-//                    .containerRelativeFrame(.horizontal) { size, axis in
-//                        size * 0.8
-//                    }
-            }
-        }
-        
+//        HStack {
+//            Text("IMPORTANT")
+//                .frame(width: 200)
+//                .background(.cyan)
+//            
+//            GeometryReader { proxy in
+//                Image(.dumb)
+//                    .resizable()
+//                    .scaledToFit()
+//                    .frame(width: proxy.size.width * 0.8)
+//                    .frame(width: proxy.size.width, height: proxy.size.height)
+////                    .containerRelativeFrame(.horizontal) { size, axis in
+////                        size * 0.8
+////                    }
+//            }
+//        }
+//        
 //        GeometryReader { proxy in
 //            Image(.dumb)
 //                .resizable()
