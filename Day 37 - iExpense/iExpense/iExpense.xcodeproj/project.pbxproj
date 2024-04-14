@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		91A61F932ADFFD0100CE9286 /* ExpenseItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91A61F922ADFFD0100CE9286 /* ExpenseItemView.swift */; };
 		91BB1BEA2A3AE18600FEA897 /* iExpenseApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91BB1BE92A3AE18600FEA897 /* iExpenseApp.swift */; };
 		91BB1BEC2A3AE18600FEA897 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91BB1BEB2A3AE18600FEA897 /* ContentView.swift */; };
 		91BB1BEE2A3AE18700FEA897 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 91BB1BED2A3AE18700FEA897 /* Assets.xcassets */; };
@@ -17,6 +18,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		91A61F922ADFFD0100CE9286 /* ExpenseItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseItemView.swift; sourceTree = "<group>"; };
 		91BB1BE62A3AE18600FEA897 /* iExpense.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iExpense.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		91BB1BE92A3AE18600FEA897 /* iExpenseApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iExpenseApp.swift; sourceTree = "<group>"; };
 		91BB1BEB2A3AE18600FEA897 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -61,6 +63,7 @@
 				91BB1BE92A3AE18600FEA897 /* iExpenseApp.swift */,
 				91BB1BEB2A3AE18600FEA897 /* ContentView.swift */,
 				91BB1BF72A3AE1BA00FEA897 /* ExpenseItem.swift */,
+				91A61F922ADFFD0100CE9286 /* ExpenseItemView.swift */,
 				91BB1BF92A3AE24100FEA897 /* Expences.swift */,
 				91BB1BED2A3AE18700FEA897 /* Assets.xcassets */,
 				91BB1BEF2A3AE18700FEA897 /* Preview Content */,
@@ -148,6 +151,7 @@
 			files = (
 				91BB1BFA2A3AE24100FEA897 /* Expences.swift in Sources */,
 				91BB1BEC2A3AE18600FEA897 /* ContentView.swift in Sources */,
+				91A61F932ADFFD0100CE9286 /* ExpenseItemView.swift in Sources */,
 				91BB1BFC2A3AEF1600FEA897 /* AddView.swift in Sources */,
 				91BB1BF82A3AE1BB00FEA897 /* ExpenseItem.swift in Sources */,
 				91BB1BEA2A3AE18600FEA897 /* iExpenseApp.swift in Sources */,
@@ -279,6 +283,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"iExpense/Preview Content\"";
+				DEVELOPMENT_TEAM = J92SCDW5UB;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -307,6 +312,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"iExpense/Preview Content\"";
+				DEVELOPMENT_TEAM = J92SCDW5UB;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
