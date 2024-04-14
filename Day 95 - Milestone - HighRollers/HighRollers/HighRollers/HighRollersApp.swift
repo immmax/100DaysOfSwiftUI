@@ -11,7 +11,7 @@ import SwiftUI
 struct HighRollersApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            DiceTabView()
         }
     }
 }
