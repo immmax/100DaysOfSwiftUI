@@ -7,68 +7,17 @@
 
 import SwiftUI
 
-struct FlagImage: View {
-    var text: String
-    
-    let labels = [
-        "estonia": "Flag with three horizontal stripes of equal size. Top stripe blue, middle stripe black, bottom stripe white",
-        "france": "Flag with three vertical stripes of equal size. Left stripe blue, middle stripe white, right stripe red",
-        "germany": "Flag with three horizontal stripes of equal size. Top stripe black, middle stripe red, bottom stripe gold",
-        "ireland": "Flag with three vertical stripes of equal size. Left stripe green, middle stripe white, right stripe orange",
-        "italy": "Flag with three vertical stripes of equal size. Left stripe green, middle stripe white, right stripe red",
-        "nigeria": "Flag with three vertical stripes of equal size. Left stripe green, middle stripe white, right stripe green",
-        "poland": "Flag with two horizontal stripes of equal size. Top stripe white, bottom stripe red",
-        "russia": "Flag with three horizontal stripes of equal size. Top stripe white, middle stripe blue, bottom stripe red",
-        "spain": "Flag with three horizontal stripes. Top thin stripe red, middle thick stripe gold with a crest on the left, bottom thin stripe red",
-        "uk": "Flag with overlapping red and white crosses, both straight and diagonally, on a blue background",
-        "us": "Flag with red and white stripes of equal size, with white stars on a blue background in the top-left corner"
-    ]
-    
-    var body: some View {
-        Image(text)
-            .renderingMode(.original)
-            .clipShape(Capsule())
-            .shadow(radius: 5)
-            .accessibilityLabel(labels[text, default: "Unknown flag"])
-    }
-}
-struct Title: ViewModifier {
-    func body(content: Content) -> some View {
-        content
-            .font(.largeTitle.bold())
-            .foregroundColor(.white)
-    }
-}
-extension View {
-    func titleStyle() -> some View {
-        modifier(Title())
-    }
-}
-
 struct ContentView: View {
-    @State private var showingScore = false
-    @State private var scoreTitle = ""
-    @State private var score = 0
-    
-    @State private var countries = ["Estonia", "France", "Germany", "Ireland", "Italy", "Nigeria", "Poland", "Russia", "Spain", "UK", "US"].shuffled()
-    
-    @State private var correctAnswer = Int.random(in: 0...2)
-    @State private var showingGameOver = false
-    @State private var gameOverTitle = "Game Over"
-    @State private var questionNumber = 0
-    let maxQuestionNumber = 8
-    
-    @State private var animationAmount = 0.0
-    @State private var userChoice: Int?
+    @State private var viewModel = ContentViewModel()
     
     var body: some View {
         ZStack {
-//            LinearGradient(gradient: Gradient(colors: [.blue, .black]), startPoint: .top, endPoint: .bottom)
-//            RadialGradient(stops: [
-//                Gradient.Stop(color: Color(red: 0.1, green: 0.2, blue: 0.45), location: 0.3),
-//                Gradient.Stop(color: Color(red: 0.76, green: 0.15, blue: 0.26), location: 0.3),
-//            ], center: .top, startRadius: 200, endRadius: 700)
-//                .ignoresSafeArea()
+            //            LinearGradient(gradient: Gradient(colors: [.blue, .black]), startPoint: .top, endPoint: .bottom)
+            //            RadialGradient(stops: [
+            //                Gradient.Stop(color: Color(red: 0.1, green: 0.2, blue: 0.45), location: 0.3),
+            //                Gradient.Stop(color: Color(red: 0.76, green: 0.15, blue: 0.26), location: 0.3),
+            //            ], center: .top, startRadius: 200, endRadius: 700)
+            //                .ignoresSafeArea()
             
             AngularGradient(colors: [.red, .yellow, .green, .blue, .purple, .red], center: .center)
                 .ignoresSafeArea()
@@ -84,25 +33,25 @@ struct ContentView: View {
                         Text("Tap the flag of ")
                             .foregroundStyle(.secondary)
                             .font(.subheadline.weight(.heavy))
-                        Text(countries[correctAnswer])
-//                            .foregroundColor(.white)
+                        Text(viewModel.countries[viewModel.correctAnswer])
+                        //                            .foregroundColor(.white)
                             .font(.largeTitle.weight(.semibold))
                     }
                     
                     ForEach(0..<3) { number in
                         Button {
-                            flagTapped(number)
+                            viewModel.flagTapped(number)
                         } label: {
-                            switch userChoice {
+                            switch viewModel.userChoice {
                             case nil:
-                                FlagImage(text: countries[number].lowercased())
+                                FlagImageView(text: viewModel.countries[number].lowercased())
                             case number:
-                                FlagImage(text: countries[number].lowercased())
+                                FlagImageView(text: viewModel.countries[number].lowercased())
                                     .rotation3DEffect(
-                                        .degrees(animationAmount),
+                                        .degrees(viewModel.animationAmount),
                                         axis: (x: 0, y: 1, z: 0))
                             default:
-                                FlagImage(text: countries[number].lowercased())
+                                FlagImageView(text: viewModel.countries[number].lowercased())
                                     .opacity(0.25)
                                     .scaleEffect(0.5)
                             }
@@ -118,7 +67,7 @@ struct ContentView: View {
                 Spacer()
                 Spacer()
                 
-                Text("Score: \(score)")
+                Text("Score: \(viewModel.score)")
                     .foregroundColor(.white )
                     .font(.title.bold())
                 
@@ -126,54 +75,21 @@ struct ContentView: View {
             }
             .padding()
         }
-        .alert(scoreTitle, isPresented: $showingScore) {
-            Button("Continue", action: askQuestion)
+        .alert(viewModel.scoreTitle, isPresented: $viewModel.showingScore) {
+            Button("Continue", action: viewModel.askQuestion)
         } message: {
-            Text("Your score is \(score)")
+            Text("Your score is \(viewModel.score)")
         }
-        .alert(gameOverTitle, isPresented: $showingGameOver) {
-            Button("Start New Game", action: reset)
+        .alert(viewModel.gameOverTitle, isPresented: $viewModel.showingGameOver) {
+            Button("Start New Game", action: viewModel.reset)
                 .buttonStyle(.borderedProminent)
         } message: {
-            Text("Your score is \(score)")
+            Text("Your score is \(viewModel.score)")
         }
-    }
-    
-    func flagTapped(_ number: Int) {
-        questionNumber += 1
-        userChoice = number
-        if number == correctAnswer {
-            scoreTitle = "Correct!"
-            score += 1
-        } else {
-            scoreTitle = "Wrong! That's the flag of \(countries[number])"
-            //score -= 1 // Uncomment this, if you want decrease score in case of wrong answer.
-        }
-        withAnimation(.easeIn(duration: 0.5)) {
-            animationAmount += 360
-        }
-        if questionNumber < maxQuestionNumber {
-            showingScore = true
-        } else {
-            showingGameOver = true
-        }
-    }
-    
-    func askQuestion() {
-        userChoice = nil
-        countries.shuffle()
-        correctAnswer = Int.random(in: 0...2)
-    }
-    
-    func reset() {
-        score = 0
-        questionNumber = 0
-        userChoice = nil
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
-    }
+
+#Preview {
+    ContentView()
 }

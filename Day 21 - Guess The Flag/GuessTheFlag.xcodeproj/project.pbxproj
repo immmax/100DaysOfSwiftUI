@@ -11,6 +11,11 @@
 		917333A429FCF0ED00C06194 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 917333A329FCF0ED00C06194 /* ContentView.swift */; };
 		917333A629FCF0EF00C06194 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 917333A529FCF0EF00C06194 /* Assets.xcassets */; };
 		917333A929FCF0EF00C06194 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 917333A829FCF0EF00C06194 /* Preview Assets.xcassets */; };
+		917C97532BCC327700FB85A9 /* ContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 917C97522BCC327700FB85A9 /* ContentViewModel.swift */; };
+		917C97552BCC32E600FB85A9 /* FlagImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 917C97542BCC32E600FB85A9 /* FlagImageView.swift */; };
+		917C97582BCC331900FB85A9 /* FlagImageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 917C97572BCC331900FB85A9 /* FlagImageViewModel.swift */; };
+		917C975B2BCC342D00FB85A9 /* CustomModifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 917C975A2BCC342D00FB85A9 /* CustomModifiers.swift */; };
+		917C975E2BCC345900FB85A9 /* View+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 917C975D2BCC345900FB85A9 /* View+Ext.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,6 +24,11 @@
 		917333A329FCF0ED00C06194 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		917333A529FCF0EF00C06194 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		917333A829FCF0EF00C06194 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		917C97522BCC327700FB85A9 /* ContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewModel.swift; sourceTree = "<group>"; };
+		917C97542BCC32E600FB85A9 /* FlagImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlagImageView.swift; sourceTree = "<group>"; };
+		917C97572BCC331900FB85A9 /* FlagImageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlagImageViewModel.swift; sourceTree = "<group>"; };
+		917C975A2BCC342D00FB85A9 /* CustomModifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomModifiers.swift; sourceTree = "<group>"; };
+		917C975D2BCC345900FB85A9 /* View+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Ext.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,10 +61,13 @@
 		917333A029FCF0ED00C06194 /* GuessTheFlag */ = {
 			isa = PBXGroup;
 			children = (
+				917C97592BCC341D00FB85A9 /* Utilites */,
 				917333A129FCF0ED00C06194 /* GuessTheFlagApp.swift */,
 				917333A329FCF0ED00C06194 /* ContentView.swift */,
+				917C97522BCC327700FB85A9 /* ContentViewModel.swift */,
 				917333A529FCF0EF00C06194 /* Assets.xcassets */,
 				917333A729FCF0EF00C06194 /* Preview Content */,
+				917C97562BCC330E00FB85A9 /* FlagImageView */,
 			);
 			path = GuessTheFlag;
 			sourceTree = "<group>";
@@ -65,6 +78,32 @@
 				917333A829FCF0EF00C06194 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		917C97562BCC330E00FB85A9 /* FlagImageView */ = {
+			isa = PBXGroup;
+			children = (
+				917C97542BCC32E600FB85A9 /* FlagImageView.swift */,
+				917C97572BCC331900FB85A9 /* FlagImageViewModel.swift */,
+			);
+			path = FlagImageView;
+			sourceTree = "<group>";
+		};
+		917C97592BCC341D00FB85A9 /* Utilites */ = {
+			isa = PBXGroup;
+			children = (
+				917C975C2BCC344A00FB85A9 /* Extensions */,
+				917C975A2BCC342D00FB85A9 /* CustomModifiers.swift */,
+			);
+			path = Utilites;
+			sourceTree = "<group>";
+		};
+		917C975C2BCC344A00FB85A9 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				917C975D2BCC345900FB85A9 /* View+Ext.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -137,8 +176,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				917C975E2BCC345900FB85A9 /* View+Ext.swift in Sources */,
+				917C97532BCC327700FB85A9 /* ContentViewModel.swift in Sources */,
 				917333A429FCF0ED00C06194 /* ContentView.swift in Sources */,
 				917333A229FCF0ED00C06194 /* GuessTheFlagApp.swift in Sources */,
+				917C975B2BCC342D00FB85A9 /* CustomModifiers.swift in Sources */,
+				917C97582BCC331900FB85A9 /* FlagImageViewModel.swift in Sources */,
+				917C97552BCC32E600FB85A9 /* FlagImageView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -195,7 +239,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -249,7 +293,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
