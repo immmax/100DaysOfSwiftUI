@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9131ACE02BD1108A0082E42C /* OneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9131ACDF2BD1108A0082E42C /* OneView.swift */; };
+		9131ACE22BD110E50082E42C /* TwoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9131ACE12BD110E50082E42C /* TwoView.swift */; };
+		9131ACE42BD112DE0082E42C /* ThreeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9131ACE32BD112DE0082E42C /* ThreeView.swift */; };
+		9131ACE62BD1172D0082E42C /* FourView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9131ACE52BD1172D0082E42C /* FourView.swift */; };
+		9131ACE82BD119690082E42C /* FiveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9131ACE72BD119690082E42C /* FiveView.swift */; };
+		9131ACEA2BD11AD80082E42C /* SixView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9131ACE92BD11AD80082E42C /* SixView.swift */; };
+		9131ACEC2BD11D350082E42C /* SevenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9131ACEB2BD11D350082E42C /* SevenView.swift */; };
+		9131ACEE2BD11EE80082E42C /* CustomModifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9131ACED2BD11EE80082E42C /* CustomModifiers.swift */; };
 		9174B0202A14837C0069E19B /* AnimationsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9174B01F2A14837C0069E19B /* AnimationsApp.swift */; };
 		9174B0222A14837C0069E19B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9174B0212A14837C0069E19B /* ContentView.swift */; };
 		9174B0242A14837E0069E19B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9174B0232A14837E0069E19B /* Assets.xcassets */; };
@@ -14,6 +22,14 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9131ACDF2BD1108A0082E42C /* OneView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneView.swift; sourceTree = "<group>"; };
+		9131ACE12BD110E50082E42C /* TwoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoView.swift; sourceTree = "<group>"; };
+		9131ACE32BD112DE0082E42C /* ThreeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreeView.swift; sourceTree = "<group>"; };
+		9131ACE52BD1172D0082E42C /* FourView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FourView.swift; sourceTree = "<group>"; };
+		9131ACE72BD119690082E42C /* FiveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FiveView.swift; sourceTree = "<group>"; };
+		9131ACE92BD11AD80082E42C /* SixView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SixView.swift; sourceTree = "<group>"; };
+		9131ACEB2BD11D350082E42C /* SevenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SevenView.swift; sourceTree = "<group>"; };
+		9131ACED2BD11EE80082E42C /* CustomModifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomModifiers.swift; sourceTree = "<group>"; };
 		9174B01C2A14837C0069E19B /* Animations.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Animations.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9174B01F2A14837C0069E19B /* AnimationsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationsApp.swift; sourceTree = "<group>"; };
 		9174B0212A14837C0069E19B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -53,6 +69,14 @@
 			children = (
 				9174B01F2A14837C0069E19B /* AnimationsApp.swift */,
 				9174B0212A14837C0069E19B /* ContentView.swift */,
+				9131ACE92BD11AD80082E42C /* SixView.swift */,
+				9131ACED2BD11EE80082E42C /* CustomModifiers.swift */,
+				9131ACEB2BD11D350082E42C /* SevenView.swift */,
+				9131ACE72BD119690082E42C /* FiveView.swift */,
+				9131ACE32BD112DE0082E42C /* ThreeView.swift */,
+				9131ACDF2BD1108A0082E42C /* OneView.swift */,
+				9131ACE52BD1172D0082E42C /* FourView.swift */,
+				9131ACE12BD110E50082E42C /* TwoView.swift */,
 				9174B0232A14837E0069E19B /* Assets.xcassets */,
 				9174B0252A14837E0069E19B /* Preview Content */,
 			);
@@ -95,7 +119,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1430;
-				LastUpgradeCheck = 1430;
+				LastUpgradeCheck = 1530;
 				TargetAttributes = {
 					9174B01B2A14837C0069E19B = {
 						CreatedOnToolsVersion = 14.3;
@@ -137,8 +161,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9131ACE62BD1172D0082E42C /* FourView.swift in Sources */,
+				9131ACEE2BD11EE80082E42C /* CustomModifiers.swift in Sources */,
+				9131ACE82BD119690082E42C /* FiveView.swift in Sources */,
+				9131ACE02BD1108A0082E42C /* OneView.swift in Sources */,
+				9131ACE22BD110E50082E42C /* TwoView.swift in Sources */,
 				9174B0222A14837C0069E19B /* ContentView.swift in Sources */,
+				9131ACE42BD112DE0082E42C /* ThreeView.swift in Sources */,
 				9174B0202A14837C0069E19B /* AnimationsApp.swift in Sources */,
+				9131ACEA2BD11AD80082E42C /* SixView.swift in Sources */,
+				9131ACEC2BD11D350082E42C /* SevenView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -149,6 +181,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -181,6 +214,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -195,7 +229,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -209,6 +243,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -241,6 +276,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -249,7 +285,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -274,6 +310,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -302,6 +339,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
