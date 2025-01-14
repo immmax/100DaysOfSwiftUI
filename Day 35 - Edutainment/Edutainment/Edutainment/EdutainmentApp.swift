@@ -2,7 +2,7 @@
 //  EdutainmentApp.swift
 //  Edutainment
 //
-//  Created by Maxim Datskiy on 5/22/23.
+//  Created by Maxim Datskiy on 8/22/24.
 //
 
 import SwiftUI
