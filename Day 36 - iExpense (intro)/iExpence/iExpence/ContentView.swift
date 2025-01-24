@@ -5,11 +5,13 @@
 //  Created by Maxim Datskiy on 6/13/23.
 //
 
+import Observation
 import SwiftUI
 
-class User: ObservableObject {
-    @Published var firstName = "Tough"
-    @Published var lastName = "Guy"
+@Observable
+class User: Codable {
+    var firstName = "Ivan"
+    var lastName = "Somov"
 }
 
 struct SecondView: View {
@@ -30,7 +32,7 @@ struct SecondView: View {
     }
 }
 struct ContentView: View {
-    @StateObject var user = User()
+    @State private var user = User()
     
     @State private var showingSheet = false
     
@@ -46,19 +48,31 @@ struct ContentView: View {
                 Text("Your name is \(user.firstName) \(user.lastName)")
                 TextField("First name:", text: $user.firstName)
                 TextField("Last name:", text: $user.lastName)
+                
+                Button("Save user") {
+                    if let data = try? JSONEncoder().encode(user) {
+                        UserDefaults.standard.set(data, forKey: "user")
+                    }
+                }
+                
                 Spacer()
+                
                 List {
                     ForEach(numbers, id:\.self) {
                         Text("Row \($0)")
                     }
                     .onDelete(perform: removeRows)
                 }
+                .listStyle(.plain)
+                
                 Button("Add number") {
                     numbers.append(currentNumber)
                     currentNumber += 1
                 }
                 .buttonStyle(.borderedProminent)
+                
                 Spacer()
+                
                 Button("Tap count \(tapCount)", role: .destructive) {
                     tapCount += 1
 //                    UserDefaults.standard.set(tapCount, forKey: "Tap")
@@ -70,14 +84,19 @@ struct ContentView: View {
                 }
                 .buttonStyle(.bordered)
                 .sheet(isPresented: $showingSheet) {
-                    SecondView(name: "@nickname")
+                    SecondView(name: "@datskiy_dev")
                 }
             }
             .padding()
             
-            .navigationTitle("onDelete()")
+            .navigationTitle("Day 36")
             .toolbar {
                 EditButton()
+            }
+            .onAppear {
+                if let data = UserDefaults.standard.object(forKey: "user") {
+                    user = try! JSONDecoder().decode(User.self, from: data as! Data)
+                }
             }
         }
     }
