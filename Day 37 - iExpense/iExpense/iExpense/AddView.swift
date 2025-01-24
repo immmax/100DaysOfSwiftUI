@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct AddView: View {
-    @ObservedObject var expenses: Expences
     @Environment(\.dismiss) var dismiss
     
     @State private var showingAlert = false
@@ -19,6 +18,7 @@ struct AddView: View {
     @State private var amount = 0.0
     
     let types = ["Business", "Personal"]
+    var expenses: Expences
     
     var body: some View {
         NavigationView {
@@ -37,21 +37,20 @@ struct AddView: View {
             .navigationTitle("Add New Expense")
             .toolbar {
                 Button("Save") {
-                    if name != "" {
-                        if amount != 0.0 {
-                            let item = ExpenseItem(name: name, type: type, amount: amount)
-                            expenses.items.append(item)
-                            dismiss()
-                        } else {
-                            alertMessage = "Amount of an expense can't be zero!"
-                            showingAlert = true
-                        }
-                    } else {
+                    guard !name.isEmpty else {
                         alertMessage = "Name of an expense can't be empty!"
                         showingAlert = true
+                        return
                     }
                     
-                    
+                    if amount != 0.0 {
+                        let item = ExpenseItem(name: name, type: type, amount: amount)
+                        expenses.items.append(item)
+                        dismiss()
+                    } else {
+                        alertMessage = "Amount of an expense can't be zero!"
+                        showingAlert = true
+                    }
                 }
             }
         }
@@ -62,8 +61,6 @@ struct AddView: View {
     }
 }
 
-struct AddView_Previews: PreviewProvider {
-    static var previews: some View {
-        AddView(expenses: Expences())
-    }
+#Preview {
+    AddView(expenses: Expences())
 }

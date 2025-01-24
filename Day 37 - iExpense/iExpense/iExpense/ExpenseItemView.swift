@@ -17,7 +17,9 @@ struct ExpenseItemView: View {
                     .font(.headline)
                 Text(item.type)
             }
+            
             Spacer()
+            
             Text(item.amount, format: .currency(code: Locale.current.currency?.identifier ?? "USD"))
                 .foregroundColor(item.amount < 10 ? .green : item.amount < 100 ? .orange : .red)
         }
@@ -37,5 +39,5 @@ struct ExpenseItemView: View {
 }
 
 //#Preview {
-//    EvpenseItemView()
+//    ExpenseItemView()
 //}
