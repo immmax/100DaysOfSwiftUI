@@ -60,11 +60,9 @@ struct MissionView: View {
     }
 }
 
-struct MissionView_Previews: PreviewProvider {
-    static let missions: [Mission] = FileManager.default.decode("missions.json")
+#Preview {
+    let missions: [Mission] = FileManager.default.decode("missions.json")
     
-    static var previews: some View {
-        MissionView(mission: missions[0])
-            .preferredColorScheme(.dark)
-    }
+    MissionView(mission: missions[0])
+        .preferredColorScheme(.dark)
 }

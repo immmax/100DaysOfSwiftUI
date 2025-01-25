@@ -67,12 +67,11 @@ struct CrewView: View {
     
 }
 
-struct CrewView_Previews: PreviewProvider {
-    static let missions: [Mission] = FileManager.default.decode("missions.json")
-    static let astronauts: [String: Astronaut] = FileManager.default.decode("astronauts.json")
+#Preview {
+    let missions: [Mission] = FileManager.default.decode("missions.json")
+    let astronauts: [String: Astronaut] = FileManager.default.decode("astronauts.json")
     
-    static var previews: some View {
-        CrewView(mission: missions[5], astronauts: astronauts)
-            .preferredColorScheme(.dark)
-    }
+    CrewView(mission: missions[5], astronauts: astronauts)
+        .preferredColorScheme(.dark)
 }
+

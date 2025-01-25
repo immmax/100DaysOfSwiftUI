@@ -61,11 +61,10 @@ struct ListLayout: View {
     }
 }
 
-struct ListLayout_Previews: PreviewProvider {
-    static let missions: [Mission] = FileManager.default.decode("missions.json")
-    static let astronauts: [String: Astronaut] = FileManager.default.decode("astronauts.json")
+#Preview {
+    let missions: [Mission] = FileManager.default.decode("missions.json")
+    let astronauts: [String: Astronaut] = FileManager.default.decode("astronauts.json")
     
-    static var previews: some View {
-        ListLayout(missions: missions, astronauts: astronauts)
-    }
+    ListLayout(missions: missions, astronauts: astronauts)
 }
+

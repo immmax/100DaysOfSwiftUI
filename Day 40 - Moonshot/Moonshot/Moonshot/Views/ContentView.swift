@@ -32,9 +32,8 @@ struct ContentView: View {
         NavigationStack {
             Group {
                 if showingGrid {
-                    GridLayout(
-                        missions: filteredMissions,
-                        astronauts: astronauts
+                    GridLayout(missions: filteredMissions,
+                               astronauts: astronauts
                     )
                 } else {
                     ListLayout(
@@ -62,8 +61,6 @@ struct ContentView: View {
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
-    }
+#Preview {
+    ContentView()
 }

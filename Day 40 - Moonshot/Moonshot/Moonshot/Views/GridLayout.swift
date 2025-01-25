@@ -48,8 +48,8 @@ struct GridLayout: View {
                         }
                         .clipShape(RoundedRectangle(cornerRadius: 10))
                         .overlay(
-                        RoundedRectangle(cornerRadius: 10)
-                            .stroke(.lightBackground))
+                            RoundedRectangle(cornerRadius: 10)
+                                .stroke(.lightBackground))
                     }
                 }
             }
@@ -65,12 +65,9 @@ struct GridLayout: View {
     }
 }
 
-struct GridLayout_Previews: PreviewProvider {
-    static let missions: [Mission] = FileManager.default.decode("missions.json")
-    static let astronauts: [String: Astronaut] = FileManager.default.decode("astronauts.json")
+#Preview {
+    let missions: [Mission] = FileManager.default.decode("missions.json")
+    let astronauts: [String: Astronaut] = FileManager.default.decode("astronauts.json")
     
-    
-    static var previews: some View {
-        GridLayout(missions: missions, astronauts: astronauts)
-    }
+    GridLayout(missions: missions, astronauts: astronauts)
 }

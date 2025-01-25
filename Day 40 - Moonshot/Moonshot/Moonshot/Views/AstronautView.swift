@@ -29,10 +29,8 @@ struct AstronautView: View {
     }
 }
 
-struct AstronautView_Previews: PreviewProvider {
-    static let astronauts: [String: Astronaut] = FileManager.default.decode("astronauts.json")
+#Preview {
+    let astronauts: [String: Astronaut] = FileManager.default.decode("astronauts.json")
     
-    static var previews: some View {
-        AstronautView(astronaut: astronauts["armstrong"]!)
-    }
+    AstronautView(astronaut: astronauts["armstrong"]!)
 }
