@@ -43,7 +43,7 @@ struct ContentView: View {
                         ZStack {
                             Color(red: .random(in: 0...1), green: .random(in: 0...1), blue: .random(in: 0...1))
                                 .clipShape(RoundedRectangle(cornerRadius: 14.0))
-                            Image("apple")
+                            Image(.apple)
                                 .resizable()
                                 .scaledToFit()
                                 .clipShape(Circle())
@@ -62,10 +62,10 @@ struct ContentView: View {
 //        Button("Decode JSON") {
 //            let input = """
 //            {
-//                "name": "Max Datskiy",
+//                "name": "Michael Scott",
 //                "address": {
-//                    "street": "108 E.Fremont St.",
-//                    "city": "O'Neill"
+//                    "street": "123 Dunder Mifflin Ave.",
+//                    "city": "Scranton"
 //                }
 //            }
 //            """
@@ -90,7 +90,7 @@ struct ContentView: View {
         //        }
         
 //        GeometryReader { geo in
-//            Image("example")
+//            Image(.example)
 //                .resizable()
 //                .scaledToFit()
 //                .frame(width: geo.size.width * 0.9)
@@ -114,8 +114,6 @@ struct ContentView: View {
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
-    }
+#Preview {
+    ContentView()
 }
