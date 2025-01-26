@@ -8,8 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var expenses = Expences()
-    @State private var showingAddExpense = false
+    @State private var expenses = Expenses()
     
     var body: some View {
         NavigationStack {
@@ -17,7 +16,7 @@ struct ContentView: View {
                 Section("Business") {
                     ForEach(expenses.items) { item in
                         if item.type == "Business" {
-                            ExpenseItemView(item)
+                            ExpenseItemView(item: item)
                         }
                     }
                     .onDelete(perform: removeItems)
@@ -25,37 +24,20 @@ struct ContentView: View {
                 Section("Personal") {
                     ForEach(expenses.items) { item in
                         if item.type == "Personal" {
-                            ExpenseItemView(item)
+                            ExpenseItemView(item: item)
                         }
                     }
                     .onDelete(perform: removeItems)
                 }
-//                ForEach(expences.items) { item in
-//                    HStack {
-//                        VStack(alignment: .leading) {
-//                            Text(item.name)
-//                                .font(.headline)
-//                            Text(item.type)
-//                        }
-//                        Spacer()
-//                        Text(item.amount, format: .currency(code: Locale.current.currency?.identifier ?? "USD"))
-//                            .foregroundColor(item.amount < 10 ? .green : item.amount < 100 ? .orange : .red)
-//                    }
-//                }
-//                .onDelete(perform: removeItems)
             }
             .navigationTitle("iExpense")
             .toolbar {
-                Button {
-                    showingAddExpense = true
+                NavigationLink {
+                    AddView(expenses: expenses)
                 } label: {
                     Image(systemName: "plus")
                 }
             }
-            .sheet(isPresented: $showingAddExpense) {
-                AddView(expenses: expenses)
-            }
-            
         }
     }
     

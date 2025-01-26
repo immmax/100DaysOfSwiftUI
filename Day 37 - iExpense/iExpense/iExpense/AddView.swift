@@ -13,17 +13,17 @@ struct AddView: View {
     @State private var showingAlert = false
     @State private var alertMessage = ""
     
-    @State private var name = ""
+    @State private var name = "New Expense"
     @State private var type = "Personal"
     @State private var amount = 0.0
     
     let types = ["Business", "Personal"]
-    var expenses: Expences
+    var expenses: Expenses
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             Form {
-                TextField("Name", text: $name)
+//                TextField("Name", text: $name)
                 
                 Picker("Type", selection: $type) {
                     ForEach(types, id: \.self) {
@@ -34,33 +34,42 @@ struct AddView: View {
                 TextField("Amount", value: $amount, format: .currency(code: "USD"))
                     .keyboardType(.decimalPad)
             }
-            .navigationTitle("Add New Expense")
+            .navigationTitle($name)
+            .navigationBarTitleDisplayMode(.inline)
+            .navigationBarBackButtonHidden()
             .toolbar {
-                Button("Save") {
-                    guard !name.isEmpty else {
-                        alertMessage = "Name of an expense can't be empty!"
-                        showingAlert = true
-                        return
-                    }
-                    
-                    if amount != 0.0 {
-                        let item = ExpenseItem(name: name, type: type, amount: amount)
-                        expenses.items.append(item)
-                        dismiss()
-                    } else {
-                        alertMessage = "Amount of an expense can't be zero!"
-                        showingAlert = true
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button("Save") {
+                        guard !name.isEmpty else {
+                            alertMessage = "Name of an expense can't be empty!"
+                            showingAlert = true
+                            return
+                        }
+                        
+                        if amount != 0.0 {
+                            let item = ExpenseItem(name: name, type: type, amount: amount)
+                            expenses.items.append(item)
+                            dismiss()
+                        } else {
+                            alertMessage = "Amount of an expense can't be zero!"
+                            showingAlert = true
+                        }
                     }
                 }
+                
+                ToolbarItem(placement: .cancellationAction) {
+                    Button("Cancel", role: .cancel) { dismiss() }
+                }
             }
-        }
-        .alert("Oops!", isPresented: $showingAlert) {
-        } message: {
-            Text(alertMessage)
+            .alert("Oops!", isPresented: $showingAlert) {
+                
+            } message: {
+                Text(alertMessage)
+            }
         }
     }
 }
 
 #Preview {
-    AddView(expenses: Expences())
+    AddView(expenses: Expenses())
 }

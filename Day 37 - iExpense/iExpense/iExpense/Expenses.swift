@@ -1,5 +1,5 @@
 //
-//  Expences.swift
+//  Expenses.swift
 //  iExpense
 //
 //  Created by Maxim Datskiy on 6/15/23.
@@ -13,7 +13,7 @@ struct Keys {
 }
 
 @Observable
-class Expences {
+class Expenses {
     var items = [ExpenseItem]() {
         didSet {
             if let encoded = try? JSONEncoder().encode(items) {
