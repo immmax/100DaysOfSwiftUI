@@ -61,7 +61,7 @@ struct ColorCyclingCircle: View {
 }
 
 struct Day_44_View: View {
-    @State private var petalOffser = -20.0
+    @State private var petalOffset = -20.0
     @State private var petalWidth = 50.0
     
     @State private var colorCycle = 0.0
@@ -77,7 +77,7 @@ struct Day_44_View: View {
                 ColorCyclingCircle(amount: colorCycle)
                     .frame(width: 250)
                 
-                Flower(petalOffset: petalOffser, petalWidth: petalWidth)
+                Flower(petalOffset: petalOffset, petalWidth: petalWidth)
 //                    .stroke(.pink, lineWidth: 1)
                     .fill(.ultraThinMaterial, style: FillStyle(eoFill: true))
                     .opacity(0.7)
@@ -85,7 +85,7 @@ struct Day_44_View: View {
             
             VStack {
                 Text("Offset")
-                Slider(value: $petalOffser, in: -40...40)
+                Slider(value: $petalOffset, in: -40...40)
                     .padding(.horizontal)
                 Text("Width")
                 Slider(value: $petalWidth, in: 1...100)
