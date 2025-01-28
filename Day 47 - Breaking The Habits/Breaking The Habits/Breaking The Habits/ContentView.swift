@@ -8,51 +8,25 @@
 import SwiftUI
 
 struct ContentView: View {
-    @StateObject var habits = Habits()
-    @State private var showingAddHabit = false
-    @State private var searchHabit = ""
-    
-//    var filteredHabits: [HabitItem]
+    @State private var habits = Habits()
     
     var body: some View {
         NavigationStack {
-            List {
-                ForEach(habits.items) { item in
-                    NavigationLink {
-                        HabitView(item: item)
-                    } label: {
-                        VStack(alignment: .leading) {
-                            Text(item.name)
-                            Text(item.description)
+            HabitsListView(habits: $habits)
+                .toolbar {
+                    ToolbarItem(placement: .topBarTrailing) {
+                        NavigationLink {
+                            AddHabitView(habits: $habits)
+                        } label: {
+                            Image(systemName: "plus")
                         }
                     }
                 }
-                .onDelete(perform: removeItems)
-            }
-            .navigationTitle("Habits")
-            .toolbar {
-                Button {
-                    showingAddHabit = true
-                } label: {
-                    Image(systemName: "plus.circle.fill")
-                        .foregroundColor(.green)
-                }
-            }
-            .sheet(isPresented: $showingAddHabit) {
-                AddHabitView(habits: habits)
-                    .presentationDetents([.height(200), .height(200)])
-            }
+                .navigationTitle("My Habits")
         }
-    }
-    
-    func removeItems(at offsets: IndexSet) {
-        habits.items.remove(atOffsets: offsets)
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
-    
-    static var previews: some View {
-        ContentView()
-    }
+#Preview {
+    ContentView()
 }
