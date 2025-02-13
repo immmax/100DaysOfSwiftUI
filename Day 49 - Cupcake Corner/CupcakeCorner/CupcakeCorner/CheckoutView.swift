@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct CheckoutView: View {
-    @ObservedObject var order: Order
+    @Bindable var order: Order
     
     @State private var confirmationTitle = ""
     @State private var confirmationMessage = ""
@@ -18,17 +18,21 @@ struct CheckoutView: View {
         ScrollView {
             VStack {
                 AsyncImage(url: URL(string: "https://hws.dev/img/cupcakes@3x.jpg"),
-                           scale: 3) { image in
-                    image
-                        .resizable()
-                        .scaledToFit()
-                } placeholder: {
-                    ProgressView()
+                           scale: 3) { phase in
+                    if let image = phase.image {
+                        image
+                            .resizable()
+                            .scaledToFit()
+                    } else if phase.error != nil {
+                        Text("Error loading image")
+                    } else {
+                        ProgressView()
+                    }
                 }
                 .frame(height: 233)
                 .accessibilityHidden(true)
                 
-                Text("Your total is \(order.details.cost, format: .currency(code: "USD"))")
+                Text("Your total is \(order.cost, format: .currency(code: "USD"))")
                     .font(.title)
                 
                 Button("Place Order") {
@@ -42,6 +46,7 @@ struct CheckoutView: View {
         }
         .navigationTitle("Check out")
         .navigationBarTitleDisplayMode(.inline)
+        .scrollBounceBehavior(.basedOnSize)
         .alert(confirmationTitle, isPresented: $showingConfirmation) {
             Button("Ok") { }
         } message: {
@@ -50,7 +55,7 @@ struct CheckoutView: View {
     }
     
     func placeOrder() async {
-        guard let encoded = try? JSONEncoder().encode(order.details) else {
+        guard let encoded = try? JSONEncoder().encode(order) else {
             print("Failed to encode order")
             return
         }
@@ -64,9 +69,9 @@ struct CheckoutView: View {
             let (data, _) = try await URLSession.shared.upload(for: request, from: encoded)
             
             //handle the result
-            let decodedOrder = try JSONDecoder().decode(OrderDetails.self, from: data)
+            let decodedOrder = try JSONDecoder().decode(Order.self, from: data)
             confirmationTitle = "Thank you!"
-            confirmationMessage = "Your order for \(decodedOrder.quantity) \(OrderDetails.types[decodedOrder.type].lowercased()) cupcakes is on its way"
+            confirmationMessage = "Your order for \(decodedOrder.quantity)x  \(Order.types[decodedOrder.type].lowercased()) cupcakes is on its way"
             
         } catch {
             print("Checkout failed.")
@@ -78,10 +83,8 @@ struct CheckoutView: View {
     }
 }
 
-struct CheckoutView_Previews: PreviewProvider {
-    static var previews: some View {
-        NavigationView {
-            CheckoutView(order: Order())
-        }
+#Preview {
+    NavigationStack {
+        CheckoutView(order: Order())
     }
 }
