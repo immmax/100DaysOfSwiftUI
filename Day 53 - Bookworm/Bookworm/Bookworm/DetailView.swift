@@ -10,7 +10,7 @@ import SwiftUI
 struct DetailView: View {
     let book: Book
     
-    @Environment(\.managedObjectContext) var moc
+    @Environment(\.modelContext) var modelContext
     @Environment(\.dismiss) var dismiss
     @State private var showingDeleteAlert = false
     
@@ -61,9 +61,10 @@ struct DetailView: View {
     }
     
     func deleteBook() {
-        moc.delete(book)
         
-        try? moc.save()
+        modelContext.delete(book)
+        
+        try? modelContext.save()
         dismiss()
     }
 }

@@ -5,19 +5,17 @@
 //  Created by Maxim Datskiy on 7/26/23.
 //
 
+import SwiftData
 import SwiftUI
 
 struct ContentView: View {
-    @Environment(\.managedObjectContext) var moc
-    @FetchRequest(sortDescriptors: [
-        SortDescriptor(\.title),
-        SortDescriptor(\.author)
-    ]) var books: FetchedResults<Book>
+    @Environment(\.modelContext) var modelContext
+    @Query var books: [Book]
     
     @State private var showingAddScreen = false
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             List {
                 ForEach(books) { book in
                     NavigationLink {
@@ -60,15 +58,13 @@ struct ContentView: View {
     func deleteBook(at offsets: IndexSet) {
         for offset in offsets {
             let book = books[offset]
-            moc.delete(book)
+            modelContext.delete(book)
         }
         
-        try? moc.save()
+        try? modelContext.save()
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
-    }
+#Preview {
+    ContentView()
 }

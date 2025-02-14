@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct AddBookView: View {
-    @Environment(\.managedObjectContext) var moc
+    @Environment(\.modelContext) var modelContext
     @Environment(\.dismiss) var dismiss
     
     @State private var title = ""
@@ -25,7 +25,7 @@ struct AddBookView: View {
     }
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             Form {
                 Section {
                     TextField("Name of book", text: $title)
@@ -46,16 +46,17 @@ struct AddBookView: View {
                 
                 Section {
                     Button("Save") {
-                        let newBook = Book(context: moc)
-                        newBook.id = UUID()
-                        newBook.title = title == " " ? "Unknown Title" : title
-                        newBook.author = author == " " ? "Unknown Author" : author
-                        newBook.rating = Int16(rating)
-                        newBook.genre = genre
-                        newBook.review = review
-                        newBook.date = date
+                        let newBook = Book(
+                            id: UUID(),
+                            title: title == " " ? "Unknown Title" : title,
+                            author: author == " " ? "Unknown Author" : author,
+                            date: date,
+                            genre: genre,
+                            rating: Int16(rating),
+                            review: review
+                        )
                         
-                        try? moc.save()
+                        modelContext.insert(newBook)
                         
                         dismiss()
                     }
@@ -67,8 +68,6 @@ struct AddBookView: View {
     }
 }
 
-struct AddBookView_Previews: PreviewProvider {
-    static var previews: some View {
-        AddBookView()
-    }
+#Preview {
+    AddBookView()
 }

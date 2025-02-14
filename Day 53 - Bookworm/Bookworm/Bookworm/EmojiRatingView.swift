@@ -21,8 +21,6 @@ struct EmojiRatingView: View {
     }
 }
 
-struct EmojiRatingView_Previews: PreviewProvider {
-    static var previews: some View {
-        EmojiRatingView(rating: 3)
-    }
+#Preview {
+    EmojiRatingView(rating: 3)
 }
