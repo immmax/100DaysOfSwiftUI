@@ -30,6 +30,7 @@ struct AddBookView: View {
                 Section {
                     TextField("Name of book", text: $title)
                     TextField("Author's name", text: $author)
+                    
                     Picker("Genre", selection: $genre) {
                         ForEach(genres, id: \.self) {
                             Text($0)
@@ -47,13 +48,12 @@ struct AddBookView: View {
                 Section {
                     Button("Save") {
                         let newBook = Book(
-                            id: UUID(),
                             title: title == " " ? "Unknown Title" : title,
                             author: author == " " ? "Unknown Author" : author,
-                            date: date,
-                            genre: genre,
                             rating: Int16(rating),
-                            review: review
+                            genre: genre,
+                            review: review,
+                            date: date
                         )
                         
                         modelContext.insert(newBook)

@@ -5,12 +5,11 @@
 //  Created by Maxim Datskiy on 2/13/25.
 //
 
-import SwiftData
 import Foundation
+import SwiftData
 
 @Model
 class Book {
-    var id: UUID
     var title: String?
     var author: String?
     var rating: Int16
@@ -18,8 +17,7 @@ class Book {
     var review: String?
     var date: Date?
     
-    init(id: UUID, title: String? = nil, author: String? = nil, rating: Int16, genre: String? = nil, review: String? = nil, date: Date? = nil) {
-        self.id = id
+    init(title: String? = nil, author: String? = nil, rating: Int16, genre: String? = nil, review: String? = nil, date: Date? = nil) {
         self.title = title
         self.author = author
         self.rating = rating

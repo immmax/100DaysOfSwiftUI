@@ -34,6 +34,7 @@ struct RatingView: View {
                     }
             }
         }
+        .buttonStyle(.plain)
         .accessibilityElement()
         .accessibilityLabel("Rating")
         .accessibilityValue(rating == 1 ? "1 star" : "\(rating) stars")
