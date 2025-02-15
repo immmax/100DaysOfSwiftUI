@@ -10,25 +10,36 @@ import SwiftUI
 
 struct ContentView: View {
     @Environment(\.modelContext) var modelContext
-    @Query(sort: \User.name) var users: [User]
-    @State private var path = [User]()
+    @Query(filter: #Predicate<User> { user in
+        if user.name.localizedStandardContains("S") {
+            if user.city == "Seattle, WA" {
+                return true
+            } else {
+                return false
+            }
+        } else {
+            return false
+        }
+    }, sort: \User.name) var users: [User]
     
     var body: some View {
-        NavigationStack(path: $path) {
+        NavigationStack {
             List(users) { user in
-                NavigationLink(value: user) {
-                    Text(user.name)
-                }
+                Text(user.name)
             }
             .navigationTitle("Users")
-            .navigationDestination(for: User.self) { user in
-                EditUserView(user: user)
-            }
             .toolbar {
-                Button("Add User", systemImage: "plus") {
-                    let user = User(name: "", city: "", joinDate: .now)
-                    modelContext.insert(user)
-                    path = [user]
+                Button("Add Samples", systemImage: "plus") {
+                    try? modelContext.delete(model: User.self)
+                    
+                    let first = User(name: "Michael Scott", city: "Scranton, NY", joinDate: .now.addingTimeInterval(86400 * -10))
+                    let second = User(name: "Max Datskiy", city: "Seattle, WA", joinDate: .now.addingTimeInterval(86400 * -50))
+                    let third = User(name: "Johny English", city: "London, UK", joinDate: .now.addingTimeInterval(86400 * 5))
+                    let forth = User(name: "Saul Goodman", city: "Albuquerque, WA", joinDate: .now.addingTimeInterval(86400 * 10))
+                    modelContext.insert(first)
+                    modelContext.insert(second)
+                    modelContext.insert(third)
+                    modelContext.insert(forth)
                 }
             }
         }
