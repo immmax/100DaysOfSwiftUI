@@ -5,6 +5,7 @@
 //  Created by Maxim Datskiy on 7/26/23.
 //
 
+import SwiftData
 import SwiftUI
 
 struct DetailView: View {
@@ -45,6 +46,7 @@ struct DetailView: View {
         }
         .navigationTitle(book.title ?? "Unknown Book")
         .navigationBarTitleDisplayMode(.inline)
+        .scrollBounceBehavior(.basedOnSize)
         .alert("Delete book?", isPresented: $showingDeleteAlert) {
             Button("Delete", role: .destructive, action: deleteBook)
             Button("Cancel", role: .cancel) {}
@@ -52,19 +54,29 @@ struct DetailView: View {
             Text("Are you sure?")
         }
         .toolbar {
-            Button {
+            Button("Delete this book", systemImage: "trash") {
                 showingDeleteAlert = true
-            } label: {
-                Label("Delete this book", systemImage: "trash")
             }
         }
     }
     
     func deleteBook() {
-        
         modelContext.delete(book)
         
         try? modelContext.save()
         dismiss()
     }
+}
+
+#Preview {
+//    do {
+//        let config = ModelConfiguration(isStoredInMemoryOnly: true)
+//        let container = try ModelContainer(for: Book.self, configuration: config)
+//        let example = Book(title: "Installation Guide", author: "Lian Li", rating: 4, genre: "Fantasy", review: "This is a great case, but installation guide might be better", date: .now)
+//        
+//        return DetailView(book: example)
+//            .modelContainer(container)
+//    } catch {
+//        return Text("Failed to create preview: \(error.localizedDescription)")
+//    }
 }

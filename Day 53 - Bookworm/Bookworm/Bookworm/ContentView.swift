@@ -10,7 +10,10 @@ import SwiftUI
 
 struct ContentView: View {
     @Environment(\.modelContext) var modelContext
-    @Query var books: [Book]
+    @Query(sort: [
+        SortDescriptor(\Book.title),
+        SortDescriptor(\Book.author)
+    ]) var books: [Book]
     
     @State private var showingAddScreen = false
     
@@ -18,12 +21,11 @@ struct ContentView: View {
         NavigationStack {
             List {
                 ForEach(books) { book in
-                    NavigationLink {
-                        DetailView(book: book)
-                    } label: {
+                    NavigationLink(value: book) {
                         HStack {
                             EmojiRatingView(rating: book.rating)
                                 .font(.largeTitle)
+                            
                             VStack(alignment: .leading) {
                                 Text(book.title ?? "Unknown Title")
                                     .font(.headline)
@@ -37,10 +39,14 @@ struct ContentView: View {
                 .onDelete(perform: deleteBook)
             }
             .navigationTitle("Bookworm")
+            .navigationDestination(for: Book.self) { book in
+                DetailView(book: book)
+            }
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     EditButton()
                 }
+                
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button() {
                         showingAddScreen.toggle()
