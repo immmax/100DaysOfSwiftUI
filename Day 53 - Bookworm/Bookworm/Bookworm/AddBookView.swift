@@ -20,8 +20,9 @@ struct AddBookView: View {
     
     let genres = ["General", "Fantasy", "Horror", "Kids", "Mystery", "Poetry", "Romance", "Thriller"]
     
-    var isBookValid: Bool {
-        return (title.isEmpty || title == " ") && (author.isEmpty || author == " ")
+    var isBookInvalid: Bool {
+        return (title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty) ||
+               (author.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
     }
     
     var body: some View {
@@ -48,8 +49,8 @@ struct AddBookView: View {
                 Section {
                     Button("Save") {
                         let newBook = Book(
-                            title: title == " " ? "Unknown Title" : title,
-                            author: author == " " ? "Unknown Author" : author,
+                            title: title,
+                            author: author,
                             rating: Int16(rating),
                             genre: genre,
                             review: review,
@@ -60,7 +61,7 @@ struct AddBookView: View {
                         
                         dismiss()
                     }
-                    .disabled(isBookValid)
+                    .disabled(isBookInvalid)
                 }
             }
             .navigationTitle("Add Book")

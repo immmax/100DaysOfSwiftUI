@@ -18,11 +18,11 @@ struct DetailView: View {
     var body: some View {
         ScrollView {
             ZStack(alignment: .bottomTrailing) {
-                Image(book.genre ?? "General")
+                Image(book.genre)
                     .resizable()
                     .scaledToFit()
                 
-                Text(book.genre?.uppercased() ?? "GENERAL")
+                Text(book.genre.uppercased())
                     .font(.caption)
                     .fontWeight(.black)
                     .padding(8)
@@ -32,19 +32,24 @@ struct DetailView: View {
                     .offset(x: -5, y: -5)
             }
             
-            Text(book.author ?? "Unknown Author")
-                .font(.title)
-                .foregroundColor(.secondary)
+            VStack(spacing: 8) {
+                Text(book.author)
+                    .font(.title)
+                    .foregroundColor(.secondary)
+                
+                HStack {
+                    RatingView(rating: .constant(Int(book.rating)))
+                    
+                    Spacer()
+                    
+                    Text(book.date.formatted(date: .abbreviated, time: .shortened))
+                }
+            }
             
-            RatingView(rating: .constant(Int(book.rating)))
-                .font(.largeTitle)
-            
-            Text(book.date?.formatted(date: .abbreviated, time: .shortened) ?? "Unknown date")
-            
-            Text(book.review ?? "No review")
+            Text(book.review)
                 .padding()
         }
-        .navigationTitle(book.title ?? "Unknown Book")
+        .navigationTitle(book.title)
         .navigationBarTitleDisplayMode(.inline)
         .scrollBounceBehavior(.basedOnSize)
         .alert("Delete book?", isPresented: $showingDeleteAlert) {

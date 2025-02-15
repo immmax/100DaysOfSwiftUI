@@ -10,14 +10,14 @@ import SwiftData
 
 @Model
 class Book {
-    var title: String?
-    var author: String?
+    var title: String
+    var author: String
     var rating: Int16
-    var genre: String?
-    var review: String?
-    var date: Date?
+    var genre: String
+    var review: String
+    var date: Date
     
-    init(title: String? = nil, author: String? = nil, rating: Int16, genre: String? = nil, review: String? = nil, date: Date? = nil) {
+    init(title: String, author: String, rating: Int16, genre: String = "General", review: String = "", date: Date = .now) {
         self.title = title
         self.author = author
         self.rating = rating
@@ -25,6 +25,7 @@ class Book {
         self.review = review
         self.date = date
     }
+    
     
     
 }
