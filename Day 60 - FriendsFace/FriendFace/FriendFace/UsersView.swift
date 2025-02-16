@@ -5,10 +5,12 @@
 //  Created by Maxim Datskiy on 2/15/25.
 //
 
+import SwiftData
 import SwiftUI
 
 struct UsersView: View {
-    @State private var users = [User]()
+    @Environment(\.modelContext) var modelContext
+    @Query var users: [User]
     
     var body: some View {
             if users.isEmpty {
@@ -18,7 +20,9 @@ struct UsersView: View {
                     Text("We're trying do download users data")
                 }
                 .task {
-                    await loadData()
+//                    if users.isEmpty {
+                        await loadData()
+//                    }
                 }
             } else {
                 List(users) { user in
@@ -40,6 +44,7 @@ struct UsersView: View {
     }
     
     func loadData() async  {
+        print("I'M INSIDE OF THE FUNCTION, LOL")
         guard let url = URL(string: "https://www.hackingwithswift.com/samples/friendface.json") else {
             print("Invalid URL")
             return
@@ -47,11 +52,20 @@ struct UsersView: View {
         
         do {
             let (data, _) = try await URLSession.shared.data(from: url)
-            
+        
             let decoder = JSONDecoder()
             decoder.dateDecodingStrategy = .iso8601
+            
             if let decodedResponse = try? decoder.decode([User].self, from: data) {
-                users = decodedResponse
+                for user in decodedResponse {
+                    modelContext.insert(user)
+//                    try modelContext.save()
+                }
+                
+//                decodedResponse.map { user in
+//                    modelContext.insert(user)
+//                    try? modelContext.save()
+//                }
             }
         } catch {
             print("Invalid Data: \(error.localizedDescription)")

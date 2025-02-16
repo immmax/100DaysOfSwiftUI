@@ -66,29 +66,29 @@ struct UserDetailsView: View {
     }
 }
 
-#Preview {
-    UserDetailsView(user: MockData.sampleUser)
-}
-
-struct MockData {
-    static let sampleUser = User(
-        id: "1",
-        isActive: false,
-        name: "Max Datskiy",
-        age: 25,
-        company: "IMD",
-        email: "max@email.com",
-        address: "Seattle. WA",
-        about: "Passionate iOS Developer",
-        registered: .now,
-        tags: ["iOS", "Swift", "SwiftUI", "Xcode", "Git"],
-        friends: [
-            Friend(id: "1", name: "Michael Scott"),
-            Friend(id: "2", name: "Dwight Shrudt"),
-            Friend(id: "3", name: "Pam"),
-            Friend(id: "5", name: "Jim"),
-            Friend(id: "5", name: "Kevin"),
-            Friend(id: "6", name: "Ryan")
-        ]
-    )
-}
+//#Preview {
+//    UserDetailsView(user: MockData.sampleUser)
+//}
+//
+//struct MockData {
+//    static let sampleUser = User(
+//        id: "1",
+//        isActive: false,
+//        name: "Max Datskiy",
+//        age: 25,
+//        company: "IMD",
+//        email: "max@email.com",
+//        address: "Seattle. WA",
+//        about: "Passionate iOS Developer",
+//        registered: .now,
+//        tags: ["iOS", "Swift", "SwiftUI", "Xcode", "Git"],
+//        friends: [
+//            Friend(id: "1", name: "Michael Scott"),
+//            Friend(id: "2", name: "Dwight Shrut"),
+//            Friend(id: "3", name: "Pam"),
+//            Friend(id: "5", name: "Jim"),
+//            Friend(id: "5", name: "Kevin"),
+//            Friend(id: "6", name: "Ryan")
+//        ]
+//    )
+//}
