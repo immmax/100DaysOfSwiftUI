@@ -5,20 +5,20 @@
 //  Created by Maxim Datskiy on 6/15/23.
 //
 
+import SwiftData
 import SwiftUI
 
 struct AddView: View {
     @Environment(\.dismiss) var dismiss
+    @Environment(\.modelContext) var modelContext
+    @Query var expenses: [Expense]
     
     @State private var showingAlert = false
     @State private var alertMessage = ""
     
     @State private var name = "New Expense"
-    @State private var type = "Personal"
+    @State private var type = ExpenseType.business
     @State private var amount = 0.0
-    
-    let types = ["Business", "Personal"]
-    var expenses: Expenses
     
     var body: some View {
         NavigationStack {
@@ -26,8 +26,8 @@ struct AddView: View {
 //                TextField("Name", text: $name)
                 
                 Picker("Type", selection: $type) {
-                    ForEach(types, id: \.self) {
-                        Text($0)
+                    ForEach(ExpenseType.allCases) { type in
+                        Text(type.rawValue).tag(type)
                     }
                 }
                 
@@ -47,8 +47,8 @@ struct AddView: View {
                         }
                         
                         if amount != 0.0 {
-                            let item = ExpenseItem(name: name, type: type, amount: amount)
-                            expenses.items.append(item)
+                            let expense = Expense(name: name, type: type.rawValue, amount: amount)
+                            modelContext.insert(expense)
                             dismiss()
                         } else {
                             alertMessage = "Amount of an expense can't be zero!"
@@ -71,5 +71,5 @@ struct AddView: View {
 }
 
 #Preview {
-    AddView(expenses: Expenses())
+    AddView()
 }
