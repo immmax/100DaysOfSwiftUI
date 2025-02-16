@@ -13,6 +13,8 @@ struct AddContactView: View {
     @Environment(\.dismiss) var dismiss
     @Environment(\.managedObjectContext) var moc
     
+    let locationFetcher = LocationFetcher()
+    
     @State private var image: Image?
     @State private var showingImagePicker = false
     @State private var showingPhotoNameEditor = false
@@ -54,6 +56,20 @@ struct AddContactView: View {
                 TextField("Name", text: $name)
                 
                 TextField("About", text: $about)
+            }
+            
+            VStack {
+                Button("Start Tracking Location") {
+                    self.locationFetcher.start()
+                }
+
+                Button("Read Location") {
+                    if let location = self.locationFetcher.lastKnownLocation {
+                        print("Your location is \(location)")
+                    } else {
+                        print("Your location is unknown")
+                    }
+                }
             }
             
             Button("Save") {
