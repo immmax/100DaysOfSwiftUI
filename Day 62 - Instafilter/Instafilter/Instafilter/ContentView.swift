@@ -76,6 +76,7 @@ struct ContentView: View {
                     Button("Select filter", action: changeFilter)
                         .buttonStyle(.bordered)
                         .tint(.blue)
+                        .disabled(selectedItem == nil)
                     
                     Spacer()
                     
