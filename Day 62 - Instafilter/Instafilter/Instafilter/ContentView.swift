@@ -156,7 +156,7 @@ struct ContentView: View {
 //        
 //        imageSaver.writeToPhotoAlbum(image: processedImage)
 //    }
-//}
+}
 
 #Preview {
     ContentView()
