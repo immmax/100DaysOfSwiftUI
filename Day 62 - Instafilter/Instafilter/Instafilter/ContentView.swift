@@ -76,10 +76,10 @@ struct ContentView: View {
                     
                     Spacer()
                     
-                    Button("Save", action: save)
-                        .buttonStyle(.borderedProminent)
-                        .tint(image == nil ? .none : .cyan)
-                        .disabled(image == nil)
+//                    Button("Save", action: save)
+//                        .buttonStyle(.borderedProminent)
+//                        .tint(image == nil ? .none : .cyan)
+//                        .disabled(image == nil)
                 }
             }
             .padding([.horizontal, .bottom])
@@ -141,7 +141,7 @@ struct ContentView: View {
         loadImage()
     }
     
-    func save() {
+//    func save() {
 //        guard let processedImage = processedImage else { return }
 //        
 //        let imageSaver = ImageSaver()
