@@ -5,24 +5,42 @@
 //  Created by Maxim Datskiy on 10/15/23.
 //
 
-import Foundation
+import CoreLocation
 import LocalAuthentication
 import MapKit
+import SwiftUI
 
 extension ContentView {
-    @MainActor class ViewModel: ObservableObject {
-        @Published var mapRegion = MKCoordinateRegion(
-            center: CLLocationCoordinate2D(latitude: 50, longitude: 0),
-            span: MKCoordinateSpan(latitudeDelta: 25, longitudeDelta: 25))
-        @Published private(set) var locations: [Location]
-        @Published var selectedPlace: Location?
-        @Published var isUnlocked = false
-        @Published var showingFaceIDAlert = false
-        @Published var showingNonBiometricsAthenticateMethod = false
-        @Published var username = ""
-        @Published var password = ""
+    @Observable
+    class ViewModel {
+        var mapRegion = MapCameraPosition.region(
+            MKCoordinateRegion(
+                center: CLLocationCoordinate2D(latitude: 50, longitude: 0),
+                span: MKCoordinateSpan(latitudeDelta: 25, longitudeDelta: 25)
+            )
+        )
         
-        let savePath = FileManager.documentsDirectory.appendingPathComponent("SavedPlaces")
+        private(set) var locations: [Location]
+        var selectedPlace: Location?
+        
+        var isUnlocked = false
+        var showingFaceIDAlert = false
+        var showingNonBiometricsAuthenticateMethod = false
+        var username = ""
+        var password = ""
+        
+        var isStandardMapMode = true
+        
+        var isValidLoginData: Bool {
+            username == "" && password == ""
+        }
+        
+        var mapStyle: MapStyle {
+            isStandardMapMode ? .standard : .hybrid(elevation: .realistic)
+        }
+        
+//        let savePath = FileManager.documentsDirectory.appendingPathComponent("SavedPlaces")
+        let savePath = URL.documentsDirectory.appending(path: "SavedPlaces")
         
         init() {
             // Loading saved locations
@@ -33,23 +51,23 @@ extension ContentView {
                 locations = []
             }
         }
-
+        
         func save() {
             do {
                 let data = try JSONEncoder().encode(locations)
-                try data.write(to: savePath, options: [.atomicWrite, .completeFileProtection])
+                try data.write(to: savePath, options: [.atomic, .completeFileProtection])
             } catch {
                 print("Unable to save data")
             }
         }
         
-        func addLocation() {
-            // Create a new location
+        func addLocation(at point: CLLocationCoordinate2D) {
+//             Create a new location
             let newLocation = Location(id: UUID(),
                                        name: "New location",
                                        description: "",
-                                       latitude: mapRegion.center.latitude,
-                                       longitude: mapRegion.center.longitude)
+                                       latitude: point.latitude,
+                                       longitude: point.longitude  )
             locations.append(newLocation)
             save()
         }
@@ -71,20 +89,16 @@ extension ContentView {
                 let reason = "Please authenticate yourself to unlock your places."
                 
                 context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics,
-                                       localizedReason: reason) { success, autenticationError in
+                                       localizedReason: reason) { success, authenticationError in
                     if success {
-                        // authenticated succesfully
-                        Task { @MainActor in
-                            self.isUnlocked = true
-                        }
+                        self.isUnlocked = true
                     } else {
-                        // there was a problem
                         self.showingFaceIDAlert = true
                     }
                 }
             } else {
                 // no biometrics
-                self.showingNonBiometricsAthenticateMethod = true
+                self.showingNonBiometricsAuthenticateMethod = true
             }
         }
     }

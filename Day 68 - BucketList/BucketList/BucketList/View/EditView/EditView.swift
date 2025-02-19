@@ -9,11 +9,8 @@ import SwiftUI
 
 struct EditView: View {
     @Environment(\.dismiss) var dismiss
-    @StateObject var viewModel = ViewModel()
-    var location: Location
+    @State private var viewModel =  ViewModel()
     var onSave: (Location) -> Void
-    
-    @State private var pages = [Page]()
     
     var body: some View {
         NavigationView {
@@ -28,7 +25,7 @@ struct EditView: View {
                     case .loading:
                         Text("Loading...")
                     case .loaded:
-                        ForEach(pages, id: \.pageid) { page in
+                        ForEach(viewModel.pages, id: \.pageid) { page in
                             /*@START_MENU_TOKEN@*/Text(page.title)/*@END_MENU_TOKEN@*/
                                 .font(.headline)
                             + Text(": ")
@@ -36,14 +33,14 @@ struct EditView: View {
                                 .italic()
                         }
                     case .failed:
-                        Text("Pleast try again later")
+                        Text("Please try again later")
                     }
                 }
             }
             .navigationTitle("Place Details")
             .toolbar {
                 Button("Save") {
-                    var newLocation = location
+                    var newLocation = viewModel.location
                     newLocation.id = UUID()
                     newLocation.name = viewModel.name
                     newLocation.description = viewModel.description
@@ -53,27 +50,18 @@ struct EditView: View {
                 }
             }
             .task {
-                await fetchnearbyPlaces()
+                await viewModel.fetchNearbyPlaces()
             }
         }
     }
     
-    func fetchnearbyPlaces() async {
-        let urlString = "https://en.wikipedia.org/w/api.php?ggscoord=\(location.coordinate.latitude)%7C\(location.coordinate.longitude)&action=query&prop=coordinates%7Cpageimages%7Cpageterms&colimit=50&piprop=thumbnail&pithumbsize=500&pilimit=50&wbptterms=description&generator=geosearch&ggsradius=10000&ggslimit=50&format=json"
+    
+    init(location: Location, onSave: @escaping (Location) -> Void) {
+        self.onSave = onSave
         
-        guard let url = URL(string: urlString) else {
-            print("Bad URL: \(urlString)")
-            return
-        }
-        
-        do {
-            let (data, _) = try await URLSession.shared.data(from: url)
-            let items = try JSONDecoder().decode(Result.self, from: data)
-            pages = items.query.pages.values.sorted()
-            viewModel.loadingState = .loaded
-        } catch {
-            viewModel.loadingState = .failed
-        }
+        viewModel.location = location
+        viewModel.name = location.name
+        viewModel.description = location.description
     }
 }
 
