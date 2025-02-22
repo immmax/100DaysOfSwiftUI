@@ -55,8 +55,7 @@ struct ContentView: View {
                 text: $searchMission,
                 placement: .navigationBarDrawer(displayMode: .always),
                 prompt: "Search a mission"
-            ) {
-            }
+            ) { }
         }
     }
 }

@@ -26,7 +26,7 @@ struct ExpenseDetailView: View {
         .accessibilityLabel(
             """
             \(expense.name),
-            \(String(format: "%.2f", expense.amount)) $")
+            $ \(String(format: "%.2f", expense.amount))")
             """
         )
         .accessibilityHint(expense.type)

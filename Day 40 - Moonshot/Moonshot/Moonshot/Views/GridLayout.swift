@@ -39,6 +39,9 @@ struct GridLayout: View {
                             .padding()
                             .frame(maxWidth: .infinity)
                             .background(.lightBackground)
+                            .accessibilityElement()
+                            .accessibilityLabel("Mission: \(mission.displayName)")
+                            .accessibilityHint("Launch Date: \(mission.formattedLaunchDate)")
                         }
                         .clipShape(RoundedRectangle(cornerRadius: 10))
                         .overlay(

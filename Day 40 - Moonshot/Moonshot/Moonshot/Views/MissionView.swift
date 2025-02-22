@@ -24,6 +24,8 @@ struct MissionView: View {
                     Text(mission.formattedLaunchDate)
                         .font(.headline.bold())
                         .foregroundColor(.white.opacity(0.5))
+                        .accessibilityLabel("Launch Date")
+                        .accessibilityHint(mission.formattedLaunchDate)
                     
                     VStack(alignment: .leading) {
                         Rectangle()
@@ -42,6 +44,7 @@ struct MissionView: View {
 
                         Rectangle()
                             .divider()
+                            .accessibilityHidden(true)
                         
                         Text("Crew")
                             .font(.title.bold())

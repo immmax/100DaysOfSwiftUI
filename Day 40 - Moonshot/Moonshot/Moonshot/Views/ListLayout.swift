@@ -35,6 +35,9 @@ struct ListLayout: View {
                             .padding()
                             .frame(maxWidth: .infinity, maxHeight: .infinity)
                             .background(.lightBackground)
+                            .accessibilityElement()
+                            .accessibilityLabel("Mission: \(mission.displayName)")
+                            .accessibilityHint("Launch Date: \(mission.formattedLaunchDate)")
                         }
                         .clipShape(RoundedRectangle(cornerRadius: 10))
                         .overlay(

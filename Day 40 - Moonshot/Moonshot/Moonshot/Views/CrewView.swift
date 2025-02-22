@@ -40,12 +40,8 @@ struct CrewView: View {
                         }
                         .padding(.horizontal)
                         .accessibilityElement()
-                        .accessibilityLabel(
-                            """
-                            \(crewMember.astronaut.name),
-                            \(crewMember.role)
-                            """
-                        )
+                        .accessibilityLabel("Astronaut: \(crewMember.astronaut.name)")
+                        .accessibilityHint("Role: \(crewMember.role)")
                     }
                     .navigationDestination(for: CrewMember.self) { crewMember in
                         AstronautView(astronaut: crewMember.astronaut)
