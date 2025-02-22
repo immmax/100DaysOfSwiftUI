@@ -26,12 +26,10 @@ struct ContentView: View {
                 
                 Section("Used words") {
                     ForEach(viewModel.usedWords, id: \.self) { word in
-                        HStack {
-                            Label(word, systemImage: "\(word.count).circle")
-                        }
-                        .accessibilityElement()
-                        .accessibilityLabel(word)
-                        .accessibilityHint("\(word.count) letters")
+                        Label(word, systemImage: "\(word.count).circle")
+                            .accessibilityElement()
+                            .accessibilityLabel(word)
+                            .accessibilityHint("\(word.count) letters")
                     }
                 }
                 

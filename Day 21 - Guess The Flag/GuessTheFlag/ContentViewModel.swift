@@ -6,9 +6,9 @@
 //
 
 import SwiftUI
-import Observation
 
-@Observable final class ContentViewModel {
+@Observable
+final class ContentViewModel {
     
     var showingScore: Bool = false
     var scoreTitle: String = ""

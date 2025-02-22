@@ -15,7 +15,7 @@ struct FlagImageView: View {
     var body: some View {
         Image(text)
             .renderingMode(.original)
-            .clipShape(Capsule())
+            .clipShape(.capsule)
             .shadow(radius: 5)
             .accessibilityLabel(viewModel.labels[text, default: "Unknown flag"])
     }

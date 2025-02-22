@@ -8,7 +8,8 @@
 import SwiftUI
 import Observation
 
-@Observable class FlagImageViewModel {
+@Observable
+class FlagImageViewModel {
 
     let labels = [
         "estonia": "Flag with three horizontal stripes of equal size. Top stripe blue, middle stripe black, bottom stripe white",

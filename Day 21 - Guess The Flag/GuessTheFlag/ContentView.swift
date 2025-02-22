@@ -12,12 +12,12 @@ struct ContentView: View {
     
     var body: some View {
         ZStack {
-            //            LinearGradient(gradient: Gradient(colors: [.blue, .black]), startPoint: .top, endPoint: .bottom)
-            //            RadialGradient(stops: [
-            //                Gradient.Stop(color: Color(red: 0.1, green: 0.2, blue: 0.45), location: 0.3),
-            //                Gradient.Stop(color: Color(red: 0.76, green: 0.15, blue: 0.26), location: 0.3),
-            //            ], center: .top, startRadius: 200, endRadius: 700)
-            //                .ignoresSafeArea()
+//            LinearGradient(gradient: Gradient(colors: [.blue, .black]), startPoint: .top, endPoint: .bottom)
+//            RadialGradient(stops: [
+//                Gradient.Stop(color: Color(red: 0.1, green: 0.2, blue: 0.45), location: 0.3),
+//                Gradient.Stop(color: Color(red: 0.76, green: 0.15, blue: 0.26), location: 0.3),
+//            ], center: .top, startRadius: 200, endRadius: 700)
+//                .ignoresSafeArea()
             
             AngularGradient(colors: [.red, .yellow, .green, .blue, .purple, .red], center: .center)
                 .ignoresSafeArea()
