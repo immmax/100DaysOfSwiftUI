@@ -34,7 +34,7 @@ struct EditProspectView: View {
     do {
         let config = ModelConfiguration(isStoredInMemoryOnly: true)
         let container = try ModelContainer(for: Prospect.self, configurations: config)
-        let prospect = Prospect(name: "TaylorSwift", email: "taylor@email.com", isContacted: false)
+        let prospect = Prospect(name: "TaylorSwift", email: "taylor@email.com", dateAdded: .now, isContacted: false)
         
         return EditProspectView(prospect: prospect)
             .modelContainer(container)

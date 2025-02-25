@@ -12,32 +12,13 @@ import SwiftData
 class Prospect {
     var name: String
     var email: String
-    var dateAdded = Date.now
+    var dateAdded: Date
     var isContacted: Bool
     
-    init(name: String, email: String, isContacted: Bool) {
+    init(name: String, email: String, dateAdded: Date, isContacted: Bool) {
         self.name = name
         self.email = email
+        self.dateAdded = dateAdded
         self.isContacted = isContacted
     }
 }
-
-//class Prospect: Identifiable, Codable {
-//    var id = UUID()
-//    var name = "Anonymous"
-//    var email = ""
-//    fileprivate(set) var isContacted = false
-//}
-
-//@MainActor class Prospects: ObservableObject {
-//    @Published var people: [Prospect]
-//    
-//    init() {
-//        people = []
-//    }
-//    
-//    func toggle(_ prospect: Prospect) {
-//        objectWillChange.send()
-//        prospect.isContacted.toggle()
-//    }
-//}

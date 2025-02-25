@@ -46,7 +46,7 @@ struct ProspectsView: View {
     
     @State private var isShowingScanner = false
     @State private var isShowingEditor = false
-    @State private var selectedProspects = Set<Prospect>() // for multiple remove
+    @State private var selectedProspects = Set<Prospect>() // for multiple selection to remove
     
     let filter: FilterType
     @State private var selectedSortOption = SortOption.allCases.first!
@@ -119,7 +119,7 @@ struct ProspectsView: View {
                 ToolbarItem(placement: .topBarTrailing) {
                     // temp button for tests
                     Button("Add") {
-                        let prospect = Prospect(name: "Max \(number)", email: "max@gmail.com", isContacted: false)
+                        let prospect = Prospect(name: "Max \(number)", email: "max@gmail.com", dateAdded: .now, isContacted: false)
                         modelContext.insert(prospect)
                         number += 1
                     }
@@ -143,13 +143,13 @@ struct ProspectsView: View {
                 
                 if selectedProspects.isEmpty == false {
                     ToolbarItem(placement: .bottomBar) {
-                        Button("Delete Selected", action: delete)
+                        Button("Delete Selected", role: .destructive, action: delete)
                     }
                 }
             }
             .sheet(isPresented: $isShowingScanner) {
                 CodeScannerView(codeTypes: [.qr],
-                                simulatedData: "Max Datskii\nmax@email .com",
+                                simulatedData: "Max Datskiy\nmax@email.com",
                                 completion: handleScan)
             }
             .onAppear {
@@ -167,20 +167,9 @@ struct ProspectsView: View {
             
             _prospects = Query(filter: #Predicate {
                 $0.isContacted == showContactedOnly
-            })
+            }, sort: [SortDescriptor(\Prospect.name)])
         }
     }
-    
-//    var filteredProspects: [Prospect] {
-//        switch filter {
-//        case .none:
-//            return prospects.people
-//        case .contacted:
-//            return prospects.people.filter { $0.isContacted }
-//        case .uncontacted:
-//            return prospects.people.filter { !$0.isContacted }
-//        }
-//    }
     
     func handleScan(result: Result<ScanResult, ScanError>) {
         isShowingScanner = false
@@ -190,11 +179,11 @@ struct ProspectsView: View {
             let details = result.string.components(separatedBy: "\n")
             guard details.count == 2 else { return }
             
-            let person = Prospect(name: details[0], email: details[1], isContacted: false)
+            let person = Prospect(name: details[0], email: details[1], dateAdded: Date.now, isContacted: false)
             modelContext.insert(person)
              
         case .failure(let error):
-            print("Scanning failure: \(error.localizedDescription)")
+            print("Scanning failed: \(error.localizedDescription)")
             
         }
     }
@@ -214,9 +203,10 @@ struct ProspectsView: View {
             content.subtitle = prospect.email
             content.sound = UNNotificationSound.default
             
-//            var dateComponens = DateComponents()
-//            dateComponens.hour = 9
-//            let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponens, repeats: false)
+//            var dateComponents = DateComponents()
+//            dateComponents.hour = 9
+//            let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: false)
+            
             let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false) //test
             
             let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
