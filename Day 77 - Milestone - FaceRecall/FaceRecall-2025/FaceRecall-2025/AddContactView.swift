@@ -5,6 +5,8 @@
 //  Created by Maxim Datskiy on 2/22/25.
 //
 
+import CoreLocation
+import MapKit
 import PhotosUI
 import SwiftUI
 
@@ -16,16 +18,26 @@ struct AddContactView: View {
     @State private var newContactName: String = ""
     
     var selectedItem: PhotosPickerItem
+    var location: CLLocationCoordinate2D
+    
+    var mapRegion = MapCameraPosition.region(
+        MKCoordinateRegion(
+            center: CLLocationCoordinate2D(latitude: 50, longitude: 0),
+            span: MKCoordinateSpan(latitudeDelta: 25, longitudeDelta: 25)
+        )
+    )
     
     var body: some View {
         NavigationStack {
             VStack(spacing: 10) {
-                if let newContactImage {
-                    newContactImage
-                        .resizable()
-                        .scaledToFill()
-                        .frame(width: 200, height: 200)
-                        .clipShape(.rect(cornerRadius: 10))
+                HStack {
+                    if let newContactImage {
+                        newContactImage
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: 200, height: 200)
+                            .clipShape(.rect(cornerRadius: 10))
+                    }
                 }
                 
                 TextField("Enter name", text: $newContactName)
@@ -34,7 +46,6 @@ struct AddContactView: View {
                     .multilineTextAlignment(.center)
                     .frame(height: 44)
                     .padding()
-                
             }
             .frame(maxHeight: .infinity, alignment: .top)
             .navigationTitle("New Contact")
@@ -60,7 +71,11 @@ struct AddContactView: View {
     func addContact() {
         Task {
             guard let imageData = try await selectedItem.loadTransferable(type: Data.self) else { return }
-            let newContact = Contact(name: newContactName, photo: imageData)
+            guard let location else {
+                print("Location in nil")
+                return
+            }
+            let newContact = Contact(name: newContactName, location: location, photo: imageData)
             modelContext.insert(newContact)
         }
     }

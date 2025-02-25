@@ -5,6 +5,7 @@
 //  Created by Maxim Datskiy on 2/22/25.
 //
 
+import CoreLocation
 import PhotosUI
 import SwiftData
 import SwiftUI
@@ -15,6 +16,9 @@ struct ContentView: View {
     
     @State private var selectedItem: PhotosPickerItem?
     @State private var showAddView: Bool = false
+    
+    let locationFetcher = LocationFetcher()
+    @State private var location: CLLocationCoordinate2D?
     
     var body: some View {
         NavigationStack {
@@ -54,11 +58,21 @@ struct ContentView: View {
                 }
             }
             .navigationTitle("Face Recall")
+            .task {
+                locationFetcher.start()
+            }
             .onChange(of: selectedItem) {
+                locationFetcher.start()
+                if let location = locationFetcher.lastKnownLocation {
+                    self.location = location
+                    print("Your location is \(self.location)")
+                } else {
+                    print("Your location is unknown: \(self.location)")
+                }
                 showAddView = true
             }
             .navigationDestination(item: $selectedItem) { selection in
-                AddContactView(selectedItem: selection)
+                AddContactView(selectedItem: selection, location: location ?? CLLocationCoordinate2D(latitude: 0, longitude: 0))
                     .onDisappear {
                         selectedItem = nil
                     }
