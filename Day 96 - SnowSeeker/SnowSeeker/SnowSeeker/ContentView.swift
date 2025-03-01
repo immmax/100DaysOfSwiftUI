@@ -7,26 +7,39 @@
 
 import SwiftUI
 
-struct User: Identifiable {
-    var id = "Jim Carrie"
+struct UserView: View {
+    var body: some View {
+        Group {
+            Text("Name: Max")
+            Text("Country: USA")
+            Text("Cars: 2022 Toyota Highlander and 2005 Honda Accord")
+        }
+        .font(.title)
+    }
 }
 
 struct ContentView: View {
-    @State private var selectedUser: User? = nil
-    @State private var isShowingUser = false
+//    @State private var layoutVertically = false
+//    @Environment(\.horizontalSizeClass) var horizontalSizeClass
     
     var body: some View {
-        Button("Tap Me") {
-            selectedUser = User()
-            isShowingUser = true
-        }
-        .sheet(item: $selectedUser) { user in
-            Text(user.id)
-                .presentationDetents([.medium, .large])
-        }
-//        .alert("Welcome", isPresented: $isShowingUser, presenting: selectedUser) { user in
-//            Button(user.id) {}
+//        Button {
+//            layoutVertically.toggle()
+//        } label: {
+//        if horizontalSizeClass == .compact {
+//            VStack(content: UserView.init)
+//        } else {
+//            HStack(content: UserView.init)
 //        }
+//        }
+        
+        ViewThatFits {
+            Rectangle()
+                .frame(width: 500, height: 200)
+            
+            Circle()
+                .frame(width: 200, height: 200)
+        }
     }
 }
 
